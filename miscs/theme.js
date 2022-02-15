@@ -1,5 +1,5 @@
 // export const topWidth = 'width:1400px; @media (max-width:1400px){ width:100%; }'
-export const containerWrap = 'max-width:1500px; margin: 0 auto; padding-left: 25px; padding-right: 25px; @media (max-width:1500px){ width:100%; padding-left: 15px; padding-right: 15px; }'
+export const containerWrap = 'max-width:1500px; margin: 0 auto; padding-left: 25px; padding-right: 25px; @media (max-width:1500px){ width:100%; } @media (max-width:1500px){ padding-left: 15px; padding-right: 15px; } '
 export const containerWrapFull = 'max-width:1920px; margin: 0 auto; padding:20px; @media (max-width:1500px){ width:100%; }'
 
 
@@ -10,8 +10,8 @@ export const fontFamily2 = `merriweather`;
 // export const mainColor = "#334195";
 export const body = '#fff';
 export const mainColor = '#a1cc20';
-export const background = "rgba(32, 32, 32, 0.05)"; // budeg tsenher
-// opacity:0.75;
+export const mainColor2 = '#f25600'; // dark orange
+export const background = "#202020"; // budeg tsenher
 
 
 export const fontSize = '13px';

@@ -27,33 +27,78 @@ const Header = () => {
     // }, []);
 
     return (
-        <Container  >
-            <div className="top_menus">
-                <div className="left_sector">
-
-                    <div className="items HomeSvg">
-                        <FaHome />
+        <>
+            <TopHeadStyle>
+                <div className="inner">
+                    <div className="logo_par">
+                        {/* <img src="/img/logo_nonb.png" alt="edumedia_logo" /> */}
                     </div>
-                    {menuData.map((el,ind)=>{
-                        return(
-                            <div key={ind} className="items">{el.text}</div>
-                        )
-                    })}
-
-                </div>
-                <div className="left_sector right">
-                    <div className="search_div">
-                        <BiSearchAlt />
+                    <div className="logo_par2">
+                        {/* <img src="/img/top_bunner.png" alt="bunner" /> */}
                     </div>
                 </div>
-            </div>
-        </Container>
+            </TopHeadStyle>
+            <Container  >
+                <div className="top_menus">
+                    <div className="left_sector">
+
+                        <div className="items HomeSvg">
+                            <FaHome />
+                        </div>
+                        {/* {menuData.map((el,ind)=>{
+                            return(
+                                <div key={ind} className="items">{el.text}</div>
+                            )
+                        })} */}
+
+                    </div>
+                    <div className="left_sector right">
+                        <div className="search_div">
+                            <BiSearchAlt />
+                        </div>
+                    </div>
+                </div>
+            </Container>
+        </>
     )
 }
 
 export default Header
 
 // #d2d6e2 //grey color
+
+const TopHeadStyle = styled.div`
+    background: url(/img/top_background.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    padding:36px 0px;
+    .inner{
+        display:flex;
+        justify-content:space-between;
+        ${props=>props.theme.containerWrap}
+        .logo_par{
+            width:350px;
+            min-width:350px;
+            height:90px;
+            display:flex;
+            align-items:center;
+            background: url(/img/logo_nonb.png) no-repeat center center; 
+            background-size: cover;
+            // img{
+            //     width:100%;
+            //     height:auto;
+            //     object-fit:contain;
+            // }
+        }
+        .logo_par2{
+            width:700px;
+            background: url(/img/top_bunner.png) no-repeat center center; 
+        }
+    }
+    
+`
 
 const menuData = [
     { text:'Боловсрол' },
