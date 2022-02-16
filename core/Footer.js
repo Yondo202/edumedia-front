@@ -7,11 +7,11 @@ import { GrMail } from "react-icons/gr"
 const Footer = () => {
     return (
         <Container>
-            <div className="container content_parent">
+            <div className="content_parent">
 
                 <div className="col_items">
                     <div className="title">bagsh.info</div>
-                    <img src="/img/logo_main.png" alt="bagshinfo_logo" />
+                    <img src="/img/logo_small.png" alt="bagshinfo_logo" />
                 </div>
                 <div className="col_items">
                     <div className="title">Меню</div>
@@ -51,7 +51,6 @@ export default Footer
 
 const Container = styled.div`
     ${({theme})=>`
-        // background-color:${theme.textColor3};
         background-color:#0f256e;
         color:#fff;
         padding-top:80px;
@@ -62,12 +61,15 @@ const Container = styled.div`
             padding-top:17px;
         }
         .content_parent{
+            ${theme.containerWrap}
             display:flex;
             justify-content:space-between;
             .col_items{
                 width:23%;
                 img{
-                    width:120px;
+                    width:100px;
+                    height:auto;
+                    object-fit:contain;
                 }
                 .content_sector{
                     .items{
@@ -127,6 +129,15 @@ const Container = styled.div`
                     margin-bottom:18px;
                     white-space: nowrap;
                     border-bottom: 1px solid hsla(0,0%,100%,.2);
+                }
+            }
+        }
+        @media (max-width:796px){
+            .content_parent{
+                flex-direction:column;
+                .col_items{
+                    width:100%;
+                    margin-bottom:18px;
                 }
             }
         }

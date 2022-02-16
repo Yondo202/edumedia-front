@@ -1,15 +1,16 @@
-import React, { useEffect, useState  } from 'react'
+import React, { useState  } from 'react'
 import styled from 'styled-components'
-import {  MainButtonStyle } from "@/miscs/CustomStyle"
 import { FaHome } from "react-icons/fa"
 import { BiSearchAlt } from "react-icons/bi"
-import { parseCookies } from "nookies";
-import Link from "next/link"
+import { AiOutlineMenu } from "react-icons/ai"
+import MobileHeader from './MobileHeader'
+import useWindowDimensions from '@/miscs/WindowDeminsion'
 
 const Header = () => {
+    const { width } = useWindowDimensions()
     const [scrollY, setScrollY] = useState(0);
     const [ name, setName ] = useState('')
-    
+    const [visible, setVisible] = useState(false);
   
 
     // function logit() {
@@ -26,15 +27,16 @@ const Header = () => {
     //     };
     // }, []);
 
+    console.log(`width--->`)
     return (
         <>
             <TopHeadStyle>
                 <div className="inner">
                     <div className="logo_par">
-                        {/* <img src="/img/logo_nonb.png" alt="edumedia_logo" /> */}
+                        <img src="/img/logo_nonb.png" alt="edumedia_logo" />
                     </div>
-                    <div className="logo_par2">
-                        {/* <img src="/img/top_bunner.png" alt="bunner" /> */}
+                    <div className="logo_par logo_par2">
+                        <img src="/img/top_bunner.png" alt="bunner" />
                     </div>
                 </div>
             </TopHeadStyle>
@@ -45,11 +47,19 @@ const Header = () => {
                         <div className="items HomeSvg">
                             <FaHome />
                         </div>
-                        {/* {menuData.map((el,ind)=>{
-                            return(
-                                <div key={ind} className="items">{el.text}</div>
-                            )
-                        })} */}
+
+                        {width > 796? menuData.map((el,ind)=>{
+                                return(
+                                    <div key={ind} className="items">{el.text}</div>
+                                )
+                            })
+                        :<div className="mobile_icon" onClick={_=>setVisible(true)}>
+                                    <AiOutlineMenu />
+                            </div>
+                        }
+                       {width < 796 ? <MobileHeader data={menuData} visible={visible} setVisible={setVisible} /> : null }
+                        
+                        
 
                     </div>
                     <div className="left_sector right">
@@ -79,22 +89,34 @@ const TopHeadStyle = styled.div`
         justify-content:space-between;
         ${props=>props.theme.containerWrap}
         .logo_par{
-            width:350px;
-            min-width:350px;
-            height:90px;
+            width:30%;
             display:flex;
+            justify-content:center;
             align-items:center;
-            background: url(/img/logo_nonb.png) no-repeat center center; 
-            background-size: cover;
-            // img{
-            //     width:100%;
-            //     height:auto;
-            //     object-fit:contain;
-            // }
+            img{
+                width:100%;
+                height:auto;
+                object-fit:contain;
+            }
         }
         .logo_par2{
-            width:700px;
-            background: url(/img/top_bunner.png) no-repeat center center; 
+            width:70%;
+        }
+    }
+    @media (max-width:768px){
+        padding:28px 0px;
+        .inner{
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            gap:30px;
+            height:100%;
+            .logo_par{
+                width:70%;
+            }
+            .logo_par2{
+                width:100%;
+            }
         }
     }
     
@@ -131,6 +153,13 @@ const Container = styled.div`
             display:flex;
             align-items:center;
             height:100%;
+            .mobile_icon{
+                padding:0px 20px;
+                svg{
+                    color:#fff;
+                    font-size:26px;
+                }
+            }
             .items{
                 position: relative;
                 font-size: 14px;

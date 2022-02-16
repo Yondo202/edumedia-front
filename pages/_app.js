@@ -26,13 +26,14 @@ const MyApp = ({ Component, pageProps, router  }) =>{
   const [ completelyLoaded, setCompletelyLoaded ] = useState(false);
 
   useEffect(()=>{
-    setCompletelyLoaded(true)
+    setCompletelyLoaded(true);
   },[])
+
   
   return(
     <ConfigProvider locale={mnMN}>
       <ThemeProvider theme={theme}>
-        <MenuProvider value={{ completelyLoaded:completelyLoaded }}>
+         <MenuProvider value={{ completelyLoaded:completelyLoaded }}>
           <Component {...pageProps} key={router.route} />
         </MenuProvider>
       </ThemeProvider>
