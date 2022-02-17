@@ -10,7 +10,7 @@ const Footer = () => {
             <div className="content_parent">
 
                 <div className="col_items">
-                    <div className="title">bagsh.info</div>
+                    <div className="title">edumedia</div>
                     <img src="/img/logo_small.png" alt="bagshinfo_logo" />
                 </div>
                 <div className="col_items">
@@ -26,7 +26,7 @@ const Footer = () => {
                     <div className="title">Бидэнтэй холбогдох</div>
                     <div className="content_sector">
                         <div className="items"> <FaPhoneAlt /> <span>77880224, 30050004</span> </div>
-                        <div className="items"> <GrMail /> <span>contact@bagshinfo.mn</span> </div>
+                        <div className="items"> <GrMail /> <span>contact@edumedia.mn</span> </div>
                     </div>
                 </div>
                 <div className="col_items">
@@ -40,7 +40,7 @@ const Footer = () => {
                 
             </div>
             <div className="container final_text">
-                © 2022 он. bagsh.info зохиогчийн эрхээр хамгаалагдсан.
+                © 2022 он. edumedia зохиогчийн эрхээр хамгаалагдсан.
             </div>
         </Container>
     )

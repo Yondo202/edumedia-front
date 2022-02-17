@@ -23,17 +23,23 @@ import Axios from "axios"
 Router.events.on('routeChangeStart', () => NProgress.start()); Router.events.on('routeChangeComplete', () => NProgress.done()); Router.events.on('routeChangeError', () => NProgress.done());
 
 const MyApp = ({ Component, pageProps, router  }) =>{
+  const [ state, setState ] = useState({
+    completelyLoaded:false,
+    config: {},
+    general: {}
+  })
   const [ completelyLoaded, setCompletelyLoaded ] = useState(false);
 
   useEffect(()=>{
-    setCompletelyLoaded(true);
+    const config = { width: window.innerWidth, height: window.innerHeight };
+    setState({ completelyLoaded:true, config:config  })
   },[])
 
   
   return(
     <ConfigProvider locale={mnMN}>
       <ThemeProvider theme={theme}>
-         <MenuProvider value={{ completelyLoaded:completelyLoaded }}>
+         <MenuProvider value={state}>
           <Component {...pageProps} key={router.route} />
         </MenuProvider>
       </ThemeProvider>

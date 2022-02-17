@@ -3,7 +3,7 @@ import { ContentCardStyle2 } from "@/miscs/CustomStyle"
 
 const ContentCardSide = () => {
   return (
-    <ContentCardStyle2>
+    <ContentCardStyle2 className="custom">
         <div className="img_par">
             <img src="https://demo.afthemes.com/newsever-pro/business/wp-content/uploads/sites/11/2018/07/adults-coffee-colleagues-1323592-150x150.jpg" alt="edumedia" />
         </div>

@@ -9,9 +9,11 @@ export const fontFamily2 = `merriweather`;
 
 // export const mainColor = "#334195";
 export const body = '#fff';
-export const mainColor = '#a1cc20';
+// export const mainColor = '#a1cc20';
+export const mainColor = '#f25600';
 export const mainColor2 = '#f25600'; // dark orange
-export const background = "#202020"; // budeg tsenher
+export const background = "#262626"; // budeg tsenher
+export const background2 = "rgba(32, 32, 32, 0.05)"; // budeg tsenher
 
 
 export const fontSize = '13px';

@@ -1,5 +1,6 @@
 import React, { useState  } from 'react'
 import styled from 'styled-components'
+import { MenuContext } from '@/global/ContextMenuProvider'
 import { FaHome } from "react-icons/fa"
 import { BiSearchAlt } from "react-icons/bi"
 import { AiOutlineMenu } from "react-icons/ai"
@@ -7,7 +8,7 @@ import MobileHeader from './MobileHeader'
 import useWindowDimensions from '@/miscs/WindowDeminsion'
 
 const Header = () => {
-    const { width } = useWindowDimensions()
+    const { config } = React.useContext(MenuContext)
     const [scrollY, setScrollY] = useState(0);
     const [ name, setName ] = useState('')
     const [visible, setVisible] = useState(false);
@@ -27,7 +28,8 @@ const Header = () => {
     //     };
     // }, []);
 
-    console.log(`width--->`)
+    console.log(`width--->`, config.width)
+
     return (
         <>
             <TopHeadStyle>
@@ -36,7 +38,7 @@ const Header = () => {
                         <img src="/img/logo_nonb.png" alt="edumedia_logo" />
                     </div>
                     <div className="logo_par logo_par2">
-                        <img src="/img/top_bunner.png" alt="bunner" />
+                        <img src="https://demo.afthemes.com/newsever-pro/light/wp-content/uploads/sites/3/2020/04/banner-promotion-1200.jpg" alt="bunner" />
                     </div>
                 </div>
             </TopHeadStyle>
@@ -47,17 +49,20 @@ const Header = () => {
                         <div className="items HomeSvg">
                             <FaHome />
                         </div>
+                        <div className="desktop">
 
-                        {width > 796? menuData.map((el,ind)=>{
+                        </div>
+
+                        { config.width < 860 ? <div className="mobile_icon" onClick={_=>setVisible(true)}>
+                            <AiOutlineMenu />
+                        </div>: menuData.map((el,ind)=>{
                                 return(
                                     <div key={ind} className="items">{el.text}</div>
                                 )
-                            })
-                        :<div className="mobile_icon" onClick={_=>setVisible(true)}>
-                                    <AiOutlineMenu />
-                            </div>
-                        }
-                       {width < 796 ? <MobileHeader data={menuData} visible={visible} setVisible={setVisible} /> : null }
+                        }) }
+                        
+
+                       {config.width < 860 ? <MobileHeader data={menuData} visible={visible} setVisible={setVisible} /> : null }
                         
                         
 
@@ -89,7 +94,7 @@ const TopHeadStyle = styled.div`
         justify-content:space-between;
         ${props=>props.theme.containerWrap}
         .logo_par{
-            width:30%;
+            width:25%;
             display:flex;
             justify-content:center;
             align-items:center;
@@ -100,7 +105,7 @@ const TopHeadStyle = styled.div`
             }
         }
         .logo_par2{
-            width:70%;
+            width:65%;
         }
     }
     @media (max-width:768px){
@@ -138,8 +143,11 @@ const menuData = [
 
 const Container = styled.div`
     height: 51px;
-    background-image:-webkit-linear-gradient(140deg, #0096c4, #20c96f);
-    background-image:linear-gradient(140deg, #0096c4, #20c96f);
+    // background-image:-webkit-linear-gradient(140deg, #0096c4, #20c96f);
+    // background-image:linear-gradient(140deg, #0096c4, #20c96f);
+    background:#cc0000;
+    background-image:-webkit-linear-gradient(140deg, #cc0000, #f25600);
+    background-image:linear-gradient(140deg, #cc0000, #f25600);
     border-top:3px solid #a1cc20;
     color:#fff;
     .top_menus{
@@ -154,6 +162,7 @@ const Container = styled.div`
             align-items:center;
             height:100%;
             .mobile_icon{
+                cursor:pointer;
                 padding:0px 20px;
                 svg{
                     color:#fff;

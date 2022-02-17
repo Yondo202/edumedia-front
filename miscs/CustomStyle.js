@@ -44,7 +44,7 @@ export const TitleStyle = styled.div`
     }
     
     .text{
-        color:#fff;
+        color:${props=>props.theme.textColor};
         display: inline-block;
         position: relative;
         z-index: 1;
@@ -69,8 +69,10 @@ export const ContentCardStyle = styled.div`
     position:relative;
     .image_par{
         width:100%;
-        height: ${props=>props.size==='big'?`600px`:`293px`};
+        height:100%;
+        ${props=>props.size==='big'?`height:398px`: props.size==='medium'?``:`max-height:293px;`};
         position:relative;
+        overflow:hidden;
         &:after{
             position: absolute;
             content: '';
@@ -83,20 +85,15 @@ export const ContentCardStyle = styled.div`
         }
         img{
             width:100%;
-            height:100%;
-            min-width:100%;
+            height:auto;
             object-fit:cover;
         }
         @media screen and (max-width: 1366px) and (min-width: 1026px){
-            ${props=>props.size==='big'?`
-                height:550px;
-            `:
-            `
-                height:265px;
-            `}
+            ${props=>props.size==='big'?`height:398px`:props.size==='medium'?``:`max-height:265px;`};
         }
         @media (max-width:500px){
-            height:265px;
+            height:100%;
+            // ${props=>props.size==='big'?`height:398px`:`max-height:265px;`};
         }
     }
     .post_read{
@@ -118,7 +115,9 @@ export const ContentCardStyle = styled.div`
     .text_content{
         background-image: linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75));
         ${props=>props.position==="outside"?`
-        padding:15px 0px;
+        ${props.dark?`background-color:none; padding:15px 0px; color:#fff;`
+        :`padding:50px 15px;
+        background-color:#fff;`}
         `
         :`
         position: absolute;
@@ -173,19 +172,23 @@ export const ContentCardStyle = styled.div`
 
 export const ContentCardStyle2 = styled.div`
     margin-bottom:13px;
-    background-color:rgba(32, 32, 32, 0.5);
+    // background-color:#fff;
+    // rgba(32, 32, 32, 0.5)
     width:100%;
     display:flex;
     .text_par{
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
         width:75%;
         padding:0px 15px;
         .title{
             font-size:14px;
-            color:#fff;
+            color:${props=>props.theme.textColor};
             opacity: 0.95;
             outline: none;
             ${props=>props.theme.weight2}
-            padding:4px 0px;
+            padding:6px 0px;
             cursor:pointer;
         }
         .categorys{
@@ -194,13 +197,13 @@ export const ContentCardStyle2 = styled.div`
             .cat{
                 ${props=>props.theme.weight2}
                 font-size:9px;
-                color:#fff;
+                color:${props=>props.theme.textColor2}
                 display: inline-block;
                 position: relative;
                 z-index: 1;
                 padding: 4px 0px;
                 text-transform: uppercase;
-                opacity:0.75;
+                opacity:0.8;
                 cursor:pointer;
                 &:hover{
                     opacity:1;
@@ -210,9 +213,9 @@ export const ContentCardStyle2 = styled.div`
                     position: absolute;
                     bottom: 0;
                     left: 0;
-                    height:3px;
+                    height:2px;
                     width:100%;
-                    background-color: #a1cc20;
+                    background-color: ${props=>props.theme.mainColor};
                 }
             }
         }
