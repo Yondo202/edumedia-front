@@ -128,7 +128,6 @@ export const ContentCardStyle = styled.div`
         `}
         width: 100%;
         z-index: 1;
-        
         .category_par{
             display:flex;
             gap:9px;
@@ -150,6 +149,7 @@ export const ContentCardStyle = styled.div`
         }
         
         .content_title{
+            margin-bottom:5px;
             cursor:pointer;
             font-size: ${props=>props.size==='big'?`2.4em`:`1.6em`};
             ${props=>props.theme.weight4}
@@ -159,6 +159,14 @@ export const ContentCardStyle = styled.div`
             gap:19px;
             opacity:0.8;
             font-size: ${props=>props.size==='big'?`14px`:`12px`};
+            .texts{
+                display:flex;
+                align-items:Center;
+                svg{
+                    margin-right:4px;
+                    font-size:15px;
+                }
+            }
         }
     }
     @media (max-width:500px){
@@ -191,10 +199,10 @@ export const ContentCardStyle2 = styled.div`
             padding:6px 0px;
             cursor:pointer;
         }
-        .categorys{
+        .category_par{
             display:flex;
             gap:8px;
-            .cat{
+            .category{
                 ${props=>props.theme.weight2}
                 font-size:9px;
                 color:${props=>props.theme.textColor2}
