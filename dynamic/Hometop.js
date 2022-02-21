@@ -32,7 +32,7 @@ const Hometop = () => {
                         <div className="right_trending">
                             <TitleStyle><span className="text">ТРЭНД МЭДЭЭ</span></TitleStyle>
                             <div className="content_par">
-                                {leftNews.map((el,ind)=>{
+                                {leftNews.slice(0,5).map((el,ind)=>{
                                     return(
                                         <ContentCardSide key={ind} data={el} />
                                     )
