@@ -1,23 +1,42 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { TitleStyle } from "@/miscs/CustomStyle"
 import ContentCard from '@/components/reusable/ContentCard'
 import ContentCardSide from '@/components/reusable/ContentCardSide'
+import axios from "@/global/axiosbase"
 
 const Hometop = () => {
+    const [ leftNews, setLeftNews ] = useState([])
+    const [ bigNews, setBigNews ] = useState([])
+    const [ smNews, setSmNews ] = useState([])
+    useEffect(()=>{
+        FetchData()
+    },[])
+
+    const FetchData = async () =>{
+        let big = await axios.get(`/posts?populate=*&sort[0]=createdAt:desc&filters[position][code][$eq]=1.1`)
+        let sm = await axios.get(`/posts?populate=*&sort[0]=createdAt:desc&filters[position][code][$eq]=1.2`)
+        let left = await axios.get(`/posts?populate=*&sort[0]=createdAt:desc&filters[position][code][$eq]=1.3`)
+        setBigNews(big?.data?.data)
+        setSmNews(sm?.data?.data)
+        setLeftNews(left?.data?.data)
+    }
+
+    // console.log(`leftNews`, leftNews)
+
     return (
         <Container>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-3 col-12">
                         <div className="right_trending">
-                            <TitleStyle><span className="text">Trending</span></TitleStyle>
+                            <TitleStyle><span className="text">ТРЭНД МЭДЭЭ</span></TitleStyle>
                             <div className="content_par">
-                                <ContentCardSide />
-                                <ContentCardSide />
-                                <ContentCardSide />
-                                <ContentCardSide />
-                                <ContentCardSide />
+                                {leftNews.map((el,ind)=>{
+                                    return(
+                                        <ContentCardSide key={ind} data={el} />
+                                    )
+                                })}
                             </div>
                         </div>
                     </div>
@@ -27,17 +46,24 @@ const Hometop = () => {
                                 <div className="col-md-8 col-12">
                                 <div className="slick_parent">
                                     <TitleStyle>
-                                        <span className="text">MAIN NEWS</span>
+                                        <span className="text">Онцлох</span>
                                     </TitleStyle>
-                                    <ContentCard size="big" position="outside" />
+                                    {bigNews?.slice(0,1).map((el,ind)=>{
+                                        return(
+                                            <ContentCard key={ind} data={el} size="big" position="outside" />
+                                        )
+                                    })}
 
                                 </div>
                             </div>
                             <div className="col-md-4 col-12">
                                 <div className="top_two">
-                                    <TitleStyle><span className="text">MAIN NEWS</span></TitleStyle>
-                                    <ContentCard />
-                                    <ContentCard />
+                                    <TitleStyle><span className="text">САНАЛ БОЛГОСОН</span></TitleStyle>
+                                    {smNews?.slice(0,2).map((el,ind)=>{
+                                        return(
+                                            <ContentCard key={ind} data={el} />
+                                        )
+                                    })}
                                 </div>
                             </div>
                             

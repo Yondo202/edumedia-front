@@ -7,7 +7,7 @@ import { AiOutlineMenu } from "react-icons/ai"
 import MobileHeader from './MobileHeader'
 import useWindowDimensions from '@/miscs/WindowDeminsion'
 
-const Header = () => {
+const Header = ({ general }) => {
     const { config } = React.useContext(MenuContext)
     const [scrollY, setScrollY] = useState(0);
     const [ name, setName ] = useState('')
@@ -29,6 +29,8 @@ const Header = () => {
     // }, []);
 
     console.log(`width--->`, config.width)
+
+    console.log(`general`, general)
 
     return (
         <>
@@ -63,7 +65,6 @@ const Header = () => {
                         
 
                        {config.width < 860 ? <MobileHeader data={menuData} visible={visible} setVisible={setVisible} /> : null }
-                        
                         
 
                     </div>

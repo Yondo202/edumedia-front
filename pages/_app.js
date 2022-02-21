@@ -10,7 +10,8 @@ import 'moment/locale/mn';
 import { MenuProvider } from "@/global/ContextMenuProvider";
 import { parseCookies } from "nookies";
 import NProgress from 'nprogress';
-import Axios from "axios"
+import axios from '@/global/axiosbase';
+import qs from 'qs'
 // import '../public/css/style.css'
 
 // function MyApp({ Component, pageProps }) {
@@ -31,9 +32,27 @@ const MyApp = ({ Component, pageProps, router  }) =>{
   const [ completelyLoaded, setCompletelyLoaded ] = useState(false);
 
   useEffect(()=>{
-    const config = { width: window.innerWidth, height: window.innerHeight };
-    setState({ completelyLoaded:true, config:config  })
+    Fetch()
   },[])
+
+  const Fetch = async () =>{
+    const config = { width: window.innerWidth, height: window.innerHeight };
+    try{
+      const query = qs.stringify({
+        populate:'*'
+      },
+      {
+        encodeValuesOnly: true,
+      }
+    );
+
+      let res = await axios.get(`/setting?${query}`)
+      setState({ completelyLoaded:true, config:config, general:res?.data?.data?.attributes  })
+    }catch{
+      return {}
+    }
+    
+  }
 
   
   return(
@@ -59,9 +78,9 @@ const MyApp = ({ Component, pageProps, router  }) =>{
 MyApp.getInitialProps = async({ Component, ctx }) =>{
   let pageProps = {}
 
-  const jwt = parseCookies(ctx).jwt;
+  // const jwt = parseCookies(ctx).jwt;
 
-  console.log('jwt', jwt);
+  // console.log('jwt', jwt);
   // const role = parseCookies(ctx).role;
 
 

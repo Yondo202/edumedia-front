@@ -31,7 +31,7 @@ export const MainButtonStyle = styled.button`
 export const TitleStyle = styled.div`
     position:relative;
     margin-bottom:25px;
-    font-size:20px;
+    font-size:18px;
     ${props=>props.theme.weight2}
     &:before{
         content:'';

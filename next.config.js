@@ -16,7 +16,7 @@ module.exports = (phase) => {
         // cart:"cart_items",
         // user: "user_info",w
         serverUrl:(()=>{
-            if(isDev) return 'http://localhost:1331'
+            if(isDev) return 'http://localhost:1380'
             // if(isProd) return 'https://b4af-124-158-107-34.ngrok.io'
             // if(isSTaging) return 'https://4708-124-158-107-34.ngrok.io'
         })(),
@@ -38,9 +38,10 @@ module.exports = (phase) => {
     }
 }
 
-module.exports = {
-    images: {
-        deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-        domains: ['demo.afthemes.com'],
-    },
-}
+
+// module.exports = {
+//     images: {
+//         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+//         domains: ['demo.afthemes.com'],
+//     },
+// }
