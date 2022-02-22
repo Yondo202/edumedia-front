@@ -70,6 +70,7 @@ export const ContentCardStyle = styled.div`
     .image_par{
         width:100%;
         height:100%;
+        min-height:100%;
         ${props=>props.size==='big'?`height:398px`: props.size==='medium'?``:`max-height:293px;`};
         position:relative;
         overflow:hidden;

@@ -53,7 +53,6 @@ const Hometop = () => {
                                             <ContentCard key={ind} data={el} size="big" position="outside" />
                                         )
                                     })}
-
                                 </div>
                             </div>
                             <div className="col-md-4 col-12">
