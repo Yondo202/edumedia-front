@@ -68,6 +68,7 @@ export const ContentCardStyle = styled.div`
     margin-bottom: ${props=>props.size==='big'?`0px`:`15px`};
     position:relative;
     .image_par{
+        cursor:pointer;
         width:100%;
         height:100%;
         min-height:100%;
@@ -230,6 +231,7 @@ export const ContentCardStyle2 = styled.div`
         }
     }
     .img_par{
+        cursor:pointer;
         width:35%;
         height:110px;
         margin: 0;

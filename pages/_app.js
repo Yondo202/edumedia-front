@@ -39,14 +39,22 @@ const MyApp = ({ Component, pageProps, router  }) =>{
     const config = { width: window.innerWidth, height: window.innerHeight };
     try{
       const query = qs.stringify({
-        populate:'*'
+        // populate:"*"
+        populate:{
+          Menu:{
+            populate:"*"
+          }
+        }
       },
       {
         encodeValuesOnly: true,
       }
     );
+    // logoBig
+    // logoSm
 
       let res = await axios.get(`/setting?${query}`)
+
       setState({ completelyLoaded:true, config:config, general:res?.data?.data?.attributes  })
     }catch{
       return {}

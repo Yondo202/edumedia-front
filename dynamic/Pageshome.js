@@ -5,18 +5,18 @@ import SideNews from '@/components/reusable/SideNews'
 import SideCard from '@/components/reusable/SideCard'
 
 
-const PagesHome = () => {
+const PagesHome = ({ data, category}) => {
     return (
         <Container>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-9 col-12">
-                        <TitleStyle><span className="text">Trending</span></TitleStyle>
-                        <SideCard small={true} />
-                        <SideCard small={true} />
-                        <SideCard small={true} />
-                        <SideCard small={true} />
-                        <SideCard small={true} />
+                        <TitleStyle><span className="text">{ category?.attributes.name }</span></TitleStyle>
+                        {data?.map((el,ind)=>{
+                            return(
+                                <SideCard key={ind} data={el} small={true} />
+                            )
+                        })}
                     </div>
                     <div className="col-md-3 col-12">
                         <SideNews />

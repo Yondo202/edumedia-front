@@ -22,10 +22,6 @@ const Homecontents = () => {
         setLeftNews(left?.data?.data)
     }
 
-    console.log(`leftNews`, leftNews)
-    console.log(`bigNews`, bigNews)
-    console.log(`smNews`, smNews)
-
 
   return (
     <Container>

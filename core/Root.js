@@ -3,12 +3,16 @@ import { MenuContext } from '@/global/ContextMenuProvider'
 import styled from 'styled-components'
 import Header from '@/core/Header'
 import Footer from '@/core/Footer'
+import PreSeo from '@/miscs/PreSeo'
 
-const Root = ({children}) => {
+
+const Root = ({children, seo}) => {
     const { general } = React.useContext(MenuContext)
 
     return (
-        <Body>
+        <Body seo={seo}>
+            <PreSeo seo={seo}/>
+
             <Header general={general} />
                 {children}
             <Footer />

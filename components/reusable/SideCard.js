@@ -1,28 +1,51 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { WiTime4 } from "react-icons/wi"
 import { AiOutlineUser } from "react-icons/ai"
+import minimize from '@/miscs/minimize'
+import {FacebookShareButton,TwitterShareButton, LinkedinShareButton, PinterestShareButton, EmailShareButton } from 'react-share';
 
-const SideCard = ({ small }) => {
-    return (
-        <Container small={small} className="custom_card">
-            <div className="image_par">
-                <img src="https://demo.afthemes.com/newsever-pro/light/wp-content/uploads/sites/3/2018/07/sky-town-city-landmark-urban-area-street-1449703-pxhere.com-1.jpg" alt="edumedia_img" />
-            </div>
-            <div className="text_content">
-                <div className="category_par">
-                    <span className="category">business</span>
-                    <span className="category">media</span>
-                </div>
-                <div className="content_title">Trump-Putin: Your toolkit to help understand the story</div>
+const SideCard = ({ small, data }) => {
+    const { push } = useRouter()
 
-                <div className="other">
-                    <div className="texts date"><WiTime4 /> July 18, 2018</div>
-                    <div className="texts writer"><AiOutlineUser /> AF themes</div>
+    if(data){
+        return (
+            <Container small={small} className="custom_card">
+                <div  onClick={_=>push(`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`)} className="image_par">
+                    <img src={minimize(data.attributes.image?.data?.attributes)} alt="edumedia_img" />
                 </div>
-            </div>
-        </Container>
-    )
+                <div className="text_content">
+                    <div className="category_par">
+                        {data.attributes?.categories?.data?.map((el,ind)=>{
+                            return(
+                                <span onClick={_=>push(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.id}`)} key={ind} className="category">{el.attributes?.name}</span>
+                            )
+                        })}
+                       
+                        {/* <span className="category">media</span> */}
+                    </div>
+                    <div  onClick={_=>push(`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`)} className="content_title">{data.attributes?.title}</div>
+    
+                    <div className="other">
+                        <div className="texts date"><WiTime4 /> {data.attributes?.createdAt.slice(0,10)}</div>
+                        <div className="texts writer"><AiOutlineUser />EduMedia</div>
+                    </div>
+                    <div className="share_button">
+                        {/* <FacebookShareButton  imageURL={minimize(news.thumb,"medium")} title="hahaha" media={minimize(news.thumb,"small")} resetButtonStyle={true} url={`http://e-medee.mn${process.env.newsUrl}${news.Slug}`} style={{ width: 50, height: 50 }} >
+                            <div className="Btnss facebook"><FaFacebookF /></div>
+                        </FacebookShareButton> */}
+                        {/* <FacebookShareButton  title="hahaha"  resetButtonStyle={true} url={`http://localhost:3081/news/2`} style={{ width: 50, height: 50 }} >
+                            <div className="Btnss facebook">share</div>
+                        </FacebookShareButton> */}
+                    </div>
+                </div>
+            </Container>
+        )
+    }else{
+       return  <div />
+    }
+    
 }
 
 export default SideCard
@@ -33,6 +56,7 @@ const Container = styled.div`
             display:grid;
             grid-template-columns:repeat(2, 1fr);
             .image_par{
+                cursor:pointer;
                 img{
                     width:100%;
                     height:auto;
@@ -90,10 +114,13 @@ const Container = styled.div`
                         display:flex;
                         align-items:Center;
                         svg{
-                            margin-right:4px;
-                            font-size:15px;
+                            margin-right:5px;
+                            font-size:18px;
                         }
                     }
+                }
+                .share_button{
+
                 }
             }
             @media (max-width:796px){

@@ -1,13 +1,17 @@
 import React, { useState  } from 'react'
-import styled from 'styled-components'
+import { useRouter } from 'next/router'
+import styled, { keyframes } from 'styled-components'
 import { MenuContext } from '@/global/ContextMenuProvider'
 import { FaHome } from "react-icons/fa"
 import { BiSearchAlt } from "react-icons/bi"
 import { AiOutlineMenu } from "react-icons/ai"
 import MobileHeader from './MobileHeader'
 import useWindowDimensions from '@/miscs/WindowDeminsion'
+import OutsideClickHandler from 'react-outside-click-handler';
 
 const Header = ({ general }) => {
+    const { push } = useRouter()
+    const [ showSearch, setShowSearch ] = useState(false)
     const { config } = React.useContext(MenuContext)
     const [scrollY, setScrollY] = useState(0);
     const [ name, setName ] = useState('')
@@ -28,16 +32,24 @@ const Header = ({ general }) => {
     //     };
     // }, []);
 
-    console.log(`width--->`, config.width)
-
+    // console.log(`width--->`, config.width)
     console.log(`general`, general)
+
+    const globalClick = () =>{
+        setShowSearch(false)
+    }
+
+    const Submithandle = (e) =>{
+        e.preventDefault()
+
+    }
 
     return (
         <>
             <TopHeadStyle>
                 <div className="inner">
                     <div className="logo_par">
-                        <img src="/img/logo_nonb.png" alt="edumedia_logo" />
+                        <img onClick={_=>push(`/`)} src="/img/logo_nonb.png" alt="edumedia_logo" />
                     </div>
                     <div className="logo_par logo_par2">
                         <img src="https://demo.afthemes.com/newsever-pro/light/wp-content/uploads/sites/3/2020/04/banner-promotion-1200.jpg" alt="bunner" />
@@ -48,29 +60,34 @@ const Header = ({ general }) => {
                 <div className="top_menus">
                     <div className="left_sector">
 
-                        <div className="items HomeSvg">
+                        <div onClick={_=>push(`/`)} className="items HomeSvg">
                             <FaHome />
-                        </div>
-                        <div className="desktop">
-
                         </div>
 
                         { config.width < 860 ? <div className="mobile_icon" onClick={_=>setVisible(true)}>
                             <AiOutlineMenu />
-                        </div>: menuData.map((el,ind)=>{
+                        </div>: general?.Menu?.map((el,ind)=>{
                                 return(
-                                    <div key={ind} className="items">{el.text}</div>
+                                    <div onClick={_=>push(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.url}`)} key={ind} className="items">{el.name}</div>
                                 )
                         }) }
-                        
-
-                       {config.width < 860 ? <MobileHeader data={menuData} visible={visible} setVisible={setVisible} /> : null }
-                        
-
+                       {config.width < 860 ? <MobileHeader data={general?.Menu??[]} visible={visible} setVisible={setVisible} /> : null }
                     </div>
                     <div className="left_sector right">
                         <div className="search_div">
-                            <BiSearchAlt />
+                            <BiSearchAlt onClick={_=>setShowSearch(prev=>!prev)} />
+
+                            {showSearch && <OutsideClickHandler
+                                    onOutsideClick={() => globalClick()}
+                            >
+                                <div className="search_inp">
+                                    <form onSubmit={Submithandle} className="input_par">
+                                        <BiSearchAlt />
+                                        <input required placeholder="Бичээд 'Enter - дарна уу' " />
+                                    </form>
+                                </div>
+                            </OutsideClickHandler>}
+                            
                         </div>
                     </div>
                 </div>
@@ -82,6 +99,11 @@ const Header = ({ general }) => {
 export default Header
 
 // #d2d6e2 //grey color
+
+const animate = keyframes`
+    0%{ transform:translateY(8px); opacity:0.5; }
+    100%{ transform:translateY(0px); opacity:1; }
+`
 
 const TopHeadStyle = styled.div`
     background: url(/img/top_background.jpg) no-repeat center center fixed; 
@@ -95,6 +117,7 @@ const TopHeadStyle = styled.div`
         justify-content:space-between;
         ${props=>props.theme.containerWrap}
         .logo_par{
+            cursor:pointer;
             width:25%;
             display:flex;
             justify-content:center;
@@ -214,9 +237,42 @@ const Container = styled.div`
             }
         }
         .search_div{
+                position:relative;
             cursor:pointer;
             svg{
-                font-size:20px;
+                font-size:24px;
+            }
+            .search_inp{
+                animation: ${animate} 0.3s ease;
+                position:absolute;
+                z-index:10;
+                right:0;
+                top:140%;
+                background-color:#fff;
+                padding:15px;
+                box-shadow:1px 1px 18px -8px black;
+                .input_par{
+                    display:flex;
+                    align-items:center;
+                    input{
+                        width:240px;
+                        padding:7px 20px;
+                        border:none;
+                        outline:none;
+                        background-color:rgba(32, 32, 32, 0.1);
+                        color:#000;
+                        border: 1px solid #fff;
+                        &:focus{
+                            border: 1px solid #000;
+                            background-color:rgba(200, 200, 200, 0.1);
+                        }
+                    }
+                    svg{
+                        font-size:23px;
+                        margin-right:12px;
+                        color:#000;
+                    }
+                }
             }
         }
     }

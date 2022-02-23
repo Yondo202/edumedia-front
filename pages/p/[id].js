@@ -1,11 +1,12 @@
 import React from "react";
 import Root from "@/core/Root";
 import PagesHome from "@/dynamic/Pageshome";
+import axios from "@/global/axiosbase"
 
-const Blog = () => {
+const Blog = ({ data, category }) => {
     return (
         <Root >
-            <PagesHome />
+            <PagesHome data={data} category={category} />
         </Root>
 
     );
@@ -14,14 +15,19 @@ const Blog = () => {
 export default Blog;
 
 export async function getServerSideProps({params, req}){
-    // let data = await checkLanguage(`/posts?slug=${params.id}`, req, true);
-
-    // let add
-    // if(data.data[0]?.count){
-    //      add = parseInt(data.data[0].count) + 1
-    // }else{
-    //      add = 1
-    // }
-    // await Axios.put(process.env.serverUrl+'/posts/'+ data.data[0]?.id, {count: add});
-    return {props: {news: null}}
+    if (parseInt(params.id)){
+        let data = await axios.get(`/posts/?populate=*&filters[categories]=${params.id}`)
+        let cat = await axios.get(`/categories/${params.id}`)
+        return {props: { data: data?.data?.data, category: cat?.data?.data } }
+    }else{
+        console.log("--------")
+        let cat = await axios.get(`/categories?filters[url]=${params.id}`)
+        if(cat?.data?.data?.length !== 0){
+            let data = await axios.get(`/posts/?populate=*&filters[categories]=${cat?.data?.data[0].id}`)
+            return {props: { data: data?.data?.data, category: cat?.data?.data[0] } }
+        // edu
+        }else{
+            return {props: { data: null, category: null } }
+        }
+    }
 }

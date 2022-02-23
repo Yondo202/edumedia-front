@@ -21,15 +21,15 @@ module.exports = (phase) => {
             // if(isSTaging) return 'https://4708-124-158-107-34.ngrok.io'
         })(),
         frontUrl:(()=>{
-            if(isDev) return 'http://localhost:3000'
+            if(isDev) return 'http://localhost:3081'
             // if(isProd) return 'https://bagshinfo.vercel.app'
             // if(isSTaging) return 'https://e-shop-front.vercel.app'
         })(),
-        productUrl:(()=>{
-            return '/product/'
+        categoryUrl:(()=>{
+            return 'p'
         })(),
         newsUrl:(()=>{
-            return '/news/'
+            return 'news'
         })(),
        
     }

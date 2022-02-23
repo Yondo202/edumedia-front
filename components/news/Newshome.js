@@ -4,14 +4,14 @@ import NewsDetail from './NewsDetail'
 import Slickcards from '@/dynamic/Slickcards'
 import SideCard from '@/components/reusable/SideCard'
 
-const Newshome = () => {
+
+const Newshome = ({data}) => {
     return (
         <>
             <Container>
-                <SideCard />
-          
+                <SideCard data={data} />
             </Container>
-            <NewsDetail />
+            <NewsDetail data={data} />
             <Slickcards />
         </>
     )
