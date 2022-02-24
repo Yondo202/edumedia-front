@@ -20,7 +20,6 @@ export async function getServerSideProps({params, req}){
         let cat = await axios.get(`/categories/${params.id}`)
         return {props: { data: data?.data?.data, category: cat?.data?.data } }
     }else{
-        console.log("--------")
         let cat = await axios.get(`/categories?filters[url]=${params.id}`)
         if(cat?.data?.data?.length !== 0){
             let data = await axios.get(`/posts/?populate=*&filters[categories]=${cat?.data?.data[0].id}`)

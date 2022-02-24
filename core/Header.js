@@ -6,15 +6,16 @@ import { FaHome } from "react-icons/fa"
 import { BiSearchAlt } from "react-icons/bi"
 import { AiOutlineMenu } from "react-icons/ai"
 import MobileHeader from './MobileHeader'
-import useWindowDimensions from '@/miscs/WindowDeminsion'
+// import useWindowDimensions from '@/miscs/WindowDeminsion'
 import OutsideClickHandler from 'react-outside-click-handler';
 
 const Header = ({ general }) => {
-    const { push } = useRouter()
+    const { push } = useRouter();
+    const [ search, setSearch ] = useState('')
     const [ showSearch, setShowSearch ] = useState(false)
     const { config } = React.useContext(MenuContext)
-    const [scrollY, setScrollY] = useState(0);
-    const [ name, setName ] = useState('')
+    // const [scrollY, setScrollY] = useState(0);
+    // const [ name, setName ] = useState('')
     const [visible, setVisible] = useState(false);
   
 
@@ -33,7 +34,6 @@ const Header = ({ general }) => {
     // }, []);
 
     // console.log(`width--->`, config.width)
-    console.log(`general`, general)
 
     const globalClick = () =>{
         setShowSearch(false)
@@ -41,6 +41,8 @@ const Header = ({ general }) => {
 
     const Submithandle = (e) =>{
         e.preventDefault()
+        push(`/search?text=${search}`)
+        setShowSearch(false)
 
     }
 
@@ -68,7 +70,7 @@ const Header = ({ general }) => {
                             <AiOutlineMenu />
                         </div>: general?.Menu?.map((el,ind)=>{
                                 return(
-                                    <div onClick={_=>push(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.url}`)} key={ind} className="items">{el.name}</div>
+                                    <div  onClick={_=>push(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.url}`)} key={ind} className="items">{el.name}</div>
                                 )
                         }) }
                        {config.width < 860 ? <MobileHeader data={general?.Menu??[]} visible={visible} setVisible={setVisible} /> : null }
@@ -82,8 +84,8 @@ const Header = ({ general }) => {
                             >
                                 <div className="search_inp">
                                     <form onSubmit={Submithandle} className="input_par">
-                                        <BiSearchAlt />
-                                        <input required placeholder="Бичээд 'Enter - дарна уу' " />
+                                        <button type="submit" ><BiSearchAlt /></button>
+                                        <input autoFocus value={search} onChange={e=>setSearch(e.target.value)} required placeholder="Бичээд 'Enter - дарна уу' " />
                                     </form>
                                 </div>
                             </OutsideClickHandler>}
@@ -254,6 +256,16 @@ const Container = styled.div`
                 .input_par{
                     display:flex;
                     align-items:center;
+                    button{
+                        border:none;
+                        outline:none;
+                        background:none;
+                        svg{
+                            font-size:23px;
+                            margin-right:12px;
+                            color:#000;
+                        }
+                    }
                     input{
                         width:240px;
                         padding:7px 20px;
@@ -267,11 +279,7 @@ const Container = styled.div`
                             background-color:rgba(200, 200, 200, 0.1);
                         }
                     }
-                    svg{
-                        font-size:23px;
-                        margin-right:12px;
-                        color:#000;
-                    }
+                   
                 }
             }
         }
