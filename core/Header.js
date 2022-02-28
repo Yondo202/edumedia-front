@@ -5,6 +5,7 @@ import { MenuContext } from '@/global/ContextMenuProvider'
 import { FaHome } from "react-icons/fa"
 import { BiSearchAlt } from "react-icons/bi"
 import { AiOutlineMenu } from "react-icons/ai"
+import { ImUser } from "react-icons/im"
 import MobileHeader from './MobileHeader'
 // import useWindowDimensions from '@/miscs/WindowDeminsion'
 import OutsideClickHandler from 'react-outside-click-handler';
@@ -91,7 +92,17 @@ const Header = ({ general }) => {
                             </OutsideClickHandler>}
                             
                         </div>
+
+                        <div className="items HomeSvg">
+                            {/* Нэвтрэх */}
+                            <ImUser />
+                        </div>
+
+                        <div className="items">
+                            Мэдээ оруулах
+                        </div>
                     </div>
+                   
                 </div>
             </Container>
         </>
@@ -238,9 +249,15 @@ const Container = styled.div`
                 }
             }
         }
-        .search_div{
+        .right{
+            display:flex;
+            gap:16px;
+            .items{
+                padding: 0px 16px;
+            }
+            .search_div{
                 position:relative;
-            cursor:pointer;
+                cursor:pointer;
             svg{
                 font-size:24px;
             }
@@ -283,5 +300,7 @@ const Container = styled.div`
                 }
             }
         }
+        }
+        
     }
 `

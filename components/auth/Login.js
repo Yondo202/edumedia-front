@@ -19,10 +19,8 @@ const Login = () => {
     const state = watch()
 
     const onSubmit =_=> {
-        console.log(state)
         NProgress.start()
         axios.post(`/auth/local`, state ).then(res=>{
-            console.log(`res`, res)
             setCookie( null, 'jwt', res.data.jwt, {
                 maxAge: 30 * 24 * 60 * 60,
                 path: '/',
@@ -47,14 +45,11 @@ const Login = () => {
             NProgress.done()
         })
     };
-
     
-
     const onChangeHandle = ( name, e) =>{
         setValue(name, e)
         clearErrors()
     }
-
 
   return( 
     <Container className="container">
