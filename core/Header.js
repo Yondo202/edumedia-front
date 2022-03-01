@@ -208,9 +208,9 @@ const Container = styled.div`
             }
             .items{
                 position: relative;
-                font-size: 14px;
+                font-size: 11.5px;
                 // line-height: 20px;
-                padding: 0px 20px;
+                padding: 0px 13px;
                 white-space:nowrap;
                 display:flex;
                 align-items:center;
