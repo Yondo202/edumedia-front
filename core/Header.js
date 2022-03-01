@@ -71,7 +71,7 @@ const Header = ({ general }) => {
                             <AiOutlineMenu />
                         </div>: general?.Menu?.map((el,ind)=>{
                                 return(
-                                    <div  onClick={_=>push(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.url}`)} key={ind} className="items">{el.name}</div>
+                                    <div onClick={_=>push(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.url}`)} key={ind} className="items">{el.name}</div>
                                 )
                         }) }
                        {config.width < 860 ? <MobileHeader data={general?.Menu??[]} visible={visible} setVisible={setVisible} /> : null }
@@ -93,7 +93,7 @@ const Header = ({ general }) => {
                             
                         </div>
 
-                        <div className="items HomeSvg">
+                        <div onClick={_=>push(`/auth/signup`)} className="items HomeSvg">
                             {/* Нэвтрэх */}
                             <ImUser />
                         </div>
