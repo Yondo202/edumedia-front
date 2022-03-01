@@ -41,19 +41,19 @@ const SideCard = ({ small, data }) => {
                         {/* <FacebookShareButton  imageURL={minimize(news.thumb,"medium")} title="hahaha" media={minimize(news.thumb,"small")} resetButtonStyle={true} url={`http://e-medee.mn${process.env.newsUrl}${news.Slug}`} style={{ width: 50, height: 50 }} >
                             <div className="Btnss facebook"><FaFacebookF /></div>
                         </FacebookShareButton> */}
-                        <FacebookShareButton  title="hahaha"  resetButtonStyle={true} url={`http://localhost:3081/news/2`} >
+                        <FacebookShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`} >
                             <div className="Btnss facebook"><FaFacebookF /></div>
                         </FacebookShareButton>
 
-                        <TwitterShareButton url={`http://localhost:3081/news/2`}  >
+                        <TwitterShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`}  >
                             <div className="Btnss twitter"><FaTwitter /></div>
                         </TwitterShareButton>
 
-                        <PinterestShareButton url={`http://localhost:3081/news/2`}  >
+                        <PinterestShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`}  >
                             <div className="Btnss FaPinterestP"><FaPinterestP /></div>
                         </PinterestShareButton>
 {/* 
-                        <EmailShareButton url={`http://localhost:3081/news/2`}  >
+                        <EmailShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`}  >
                             <div className="Btnss AiOutlineMail"><MdEmail /></div>
                         </EmailShareButton> */}
 
