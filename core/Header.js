@@ -96,11 +96,9 @@ const Header = ({ general }) => {
 
                         <div onClick={_=>push(`/auth/login`)} className="items HomeSvg userSector">
                             {/* Нэвтрэх */}
-                            {/* <ImUser /> */}
-
-                            <div className="username">
+                            {jwt?<ImUser />:<div className="username">
                                 {email?.slice(0,1)}
-                            </div>
+                            </div>}
                         </div>
 
                         <div className="items">

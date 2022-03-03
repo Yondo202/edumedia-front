@@ -16,7 +16,6 @@ const InsertBlog = () => {
 
     const state = watch()
 
-
     return (
         <Container className="container">
             <div className="content_parent">
@@ -24,10 +23,10 @@ const InsertBlog = () => {
 
                 <div className="row">
                     <div className="col-md-4">
-                        <h1>hahahahha</h1>
+                        <h1>hh</h1>
                     </div>
                     <div className="col-md-8">
-                        <h1>hahahahha</h1>
+                        <h1>hh</h1>
                     </div>
                 </div>
 
