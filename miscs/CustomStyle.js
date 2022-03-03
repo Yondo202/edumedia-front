@@ -32,6 +32,9 @@ export const TitleStyle = styled.div`
     position:relative;
     margin-bottom:25px;
     font-size:18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
     ${props=>props.theme.weight2}
     &:before{
         content:'';
@@ -60,6 +63,16 @@ export const TitleStyle = styled.div`
             background-color: ${props=>props.theme.mainColor};
         }
         
+    }
+    .addition{
+        cursor:pointer;
+        font-size:14.5px;
+        color:${props=>props.theme.textColor3};
+        ${props=>props.theme.weight}
+        text-decoration:underline;
+        &:hover{
+            color:${props=>props.theme.textColor};
+        }
     }
 `
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router"
 import { setCookie, parseCookies } from "nookies";
+import { TitleStyle } from "@/miscs/CustomStyle"
 import styled from 'styled-components';
 import Link from "next/link"
 import {  MainButtonStyle } from "@/miscs/CustomStyle"
@@ -121,19 +122,10 @@ const Signup = () => {
   return(
     <>
     <Container className="container" page={step}>
-        <div className="header">
-            <Link href="/">
-                <a>
-                    <div className="logo_par">
-                        <img src="/img/logo_small.png" alt="edumedia" />
-                    </div>
-                </a>
-            </Link>
-        </div>
        
         <div className="bodys">
             <div className="main_content" >
-                <div className="title">Бүртгүүлэх</div>
+                <TitleStyle > <span className="text">Бүртгүүлэх</span>  <Link href="/auth/login"><a className="addition">Нэвтрэх</a></Link> </TitleStyle>
 
                 <div className="slice_par">
 
@@ -238,6 +230,8 @@ export default Signup;
 
 
 const Container = styled.div`
+    padding-top:40px;
+    padding-bottom:100px;
     .bodys{
         width:100%;
         display:flex;
@@ -330,8 +324,8 @@ const Container = styled.div`
                     font-weight:${props=>props.theme.weight};
                 }
                 .label{
-                    color:${props=>props.theme.textColor2};
-                    font-size:12px;
+                    color:${props=>props.theme.textColor};
+                    font-size:13px;
                     font-weight:${props=>props.theme.weight};
                     margin-bottom:6px;
                     .required{
@@ -386,12 +380,12 @@ const Container = styled.div`
                 }
             }
           
-            .title{
-                font-size:30px;
-                color:${props=>props.theme.textColor};
-                font-weight:${props=>props.theme.weight};
-                margin-bottom:30px;
-            }
+            // .title{
+            //     font-size:30px;
+            //     color:${props=>props.theme.textColor};
+            //     font-weight:${props=>props.theme.weight};
+            //     margin-bottom:30px;
+            // }
             .custom{
                 width:100%;
                 padding:14px 0px;

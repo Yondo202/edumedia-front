@@ -21,7 +21,7 @@ module.exports = (phase) => {
             if(isSTaging) return 'https://4938-124-158-107-34.ngrok.io'
         })(),
         frontUrl:(()=>{
-            if(isDev) return 'http://localhost:3081'
+            if(isDev) return 'http://localhost:3080'
             if(isProd) return 'https://edumedia.vercel.app'
             if(isSTaging) return 'https://edumedia.vercel.app'
         })(),

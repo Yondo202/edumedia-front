@@ -87,7 +87,7 @@ const Container = styled.div`
            
             .text_content{
                 min-height:100%;
-                padding: ${small ?`20px 20px`:`50px 20px`};
+                padding: ${small ?`20px 20px;`:`50px 20px`};
                 width: 100%;
                 display:flex;
                 flex-direction:column;

@@ -1,9 +1,12 @@
 import React from 'react';
+import InsertBlog from '@/components/auth/InsertBlog';
 import Root from '@/core/Root';
-import Login from '@/components/auth/Login';
 
 const login = () => {
-  return <Root><Login /></Root> 
+  return <Root>
+    <InsertBlog />
+  </Root> 
 };
 
 export default login;
+

@@ -1,4 +1,5 @@
 import React, { useState  } from 'react'
+import { setCookie, parseCookies } from "nookies";
 import { useRouter } from 'next/router'
 import styled, { keyframes } from 'styled-components'
 import { MenuContext } from '@/global/ContextMenuProvider'
@@ -11,6 +12,7 @@ import MobileHeader from './MobileHeader'
 import OutsideClickHandler from 'react-outside-click-handler';
 
 const Header = ({ general }) => {
+    const { jwt, username, email } = parseCookies()
     const { push } = useRouter();
     const [ search, setSearch ] = useState('')
     const [ showSearch, setShowSearch ] = useState(false)
@@ -44,7 +46,6 @@ const Header = ({ general }) => {
         e.preventDefault()
         push(`/search?text=${search}`)
         setShowSearch(false)
-
     }
 
     return (
@@ -93,9 +94,13 @@ const Header = ({ general }) => {
                             
                         </div>
 
-                        <div onClick={_=>push(`/auth/signup`)} className="items HomeSvg">
+                        <div onClick={_=>push(`/auth/login`)} className="items HomeSvg userSector">
                             {/* Нэвтрэх */}
-                            <ImUser />
+                            {/* <ImUser /> */}
+
+                            <div className="username">
+                                {email?.slice(0,1)}
+                            </div>
                         </div>
 
                         <div className="items">
@@ -246,6 +251,36 @@ const Container = styled.div`
                 &:hover{
                     opacity:0.9;
                     transition:all 0.250s ease;
+                }
+            }
+            .userSector{
+                padding:0px 12px !important;
+                .username{
+                    text-transform:uppercase;
+                    ${props=>props.theme.weight4}
+                    background-color:rgba(255,255,255,0.9);
+                    width:28px;
+                    height:28px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    border-radius:50%;
+                    font-weight:bold;
+                    font-size:18px;
+                    color:${props=>props.theme.mainColor};
+                    cursor:pointer;
+                    // padding-bottom:4px;
+                    position:relative;
+                    &:after{
+                        content:'';
+                        position:absolute;
+                        top:-3px;
+                        right:-2px;
+                        background-color:#09c709;
+                        height:9px;
+                        width:9px;
+                        border-radius:50%;
+                    }
                 }
             }
         }

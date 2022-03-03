@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { TitleStyle } from "@/miscs/CustomStyle"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
 import { setCookie } from "nookies";
@@ -53,24 +54,15 @@ const Login = () => {
 
   return( 
     <Container className="container">
-        <Link href="/">
-            <a>
-                <div className="logo_par">
-                    <img src="/img/logo_main.png" alt="bagshinfo_logo" />
-                </div>
-            </a>
-        </Link>
-        
-
         <div className="bodys">
             <form onSubmit={handleSubmit(onSubmit)} className="main_content">
-                <div className="title">Нэвтрэх</div>
+                <TitleStyle > <span className="text">Нэвтрэх</span> <Link href="/auth/signup"><a className="addition">Бүртгүүлэх</a></Link></TitleStyle>
                 <div className="inp_par">
                     <input
                         { ...register('identifier', { required: 'Email - ээ оруулна уу' }) }
                         type="email"
                         onChange={e=>onChangeHandle('identifier', e.target.value)}
-
+                        autoFocus
                         className={errors.identifier?.message?`my_inp err_style`:`my_inp`}
                         placeholder="Емэйл ээр нэвтэрнэ үү "
                     />
@@ -111,6 +103,8 @@ export default Login;
 
 
 const Container = styled.div`
+    padding-top:40px;
+    padding-bottom:200px;
     .bodys{
         width:100%;
         display:flex;
@@ -196,12 +190,12 @@ const Container = styled.div`
                 }
             }
             
-            .title{
-                font-size:28px;
-                color:${props=>props.theme.textColor};
-                margin-bottom:30px;
-                font-weight:${props=>props.theme.weight};
-            }
+            // .title{
+            //     font-size:28px;
+            //     color:${props=>props.theme.textColor};
+            //     margin-bottom:30px;
+            //     font-weight:${props=>props.theme.weight};
+            // }
         }
     }
     .logo_par{
