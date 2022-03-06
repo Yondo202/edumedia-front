@@ -74,29 +74,29 @@ const MyApp = ({ Component, pageProps, router  }) =>{
   )
 }
 
-// function redirectUser(ctx, location){
-//   if(ctx.req){
-//       ctx.res.writeHead(302, { Location: location });
-//       ctx.res.end();
-//   }else{
-//       Router.push(location);
-//   }
-// }
+function redirectUser(ctx, location){
+  if(ctx.req){
+      ctx.res.writeHead(302, { Location: location });
+      ctx.res.end();
+  }else{
+      Router.push(location);
+  }
+}
 
 MyApp.getInitialProps = async({ Component, ctx }) =>{
   let pageProps = {}
 
-  // const jwt = parseCookies(ctx).jwt;
+  const jwt = parseCookies(ctx).jwt;
 
   // console.log('jwt', jwt);
   // const role = parseCookies(ctx).role;
 
 
-  // if(!jwt){
-  //   if( ctx.pathname.includes("/auth") ){
-  //       redirectUser(ctx, "/login");
-  //   }
-  // }
+  if(!jwt){
+    if( ctx.pathname.includes("/insertblog") ){
+        redirectUser(ctx, "/auth/login");
+    }
+  }
   
   if(Component.getInitialProps){
       pageProps = await Component.getInitialProps(ctx);

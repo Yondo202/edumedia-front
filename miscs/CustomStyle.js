@@ -8,7 +8,7 @@ export const MainButtonStyle = styled.button`
     color: ${props=>props.color==="false"?`1px solid #000`:`#fff`};
     padding:6px 24px;
     font-size:13px;
-    font-weight:${props=>props.theme.weight};
+    ${props=>props.theme.weight}
     // font-family:'SFProDisplaybold';
     outline: none !important;
     border:${props=>props.color==="false"?`1px solid #8a8d91`:`none`}; !important;
@@ -24,7 +24,7 @@ export const MainButtonStyle = styled.button`
         color:${props=>props.color==="false"?`#8a8d91`:`#fff`};
     }
     &:hover{
-        background-color: ${props=>props.color==="false"?`#d8d8d8`:`#05947C`};
+        background-color: ${props=>props.color==="false"?`#d8d8d8`:`#d14f07`};
     }
 `
 
@@ -121,7 +121,7 @@ export const ContentCardStyle = styled.div`
             color:#202020;
             ${props=>props.theme.weight2}
             padding: 4px 10px;
-            font-size: 12px;
+            font-size: 11.5px;
             line-height: 17px;
             border-radius: 50px;
             background-color: rgba(255, 255, 255, 0.7);
@@ -155,7 +155,7 @@ export const ContentCardStyle = styled.div`
                 cursor:pointer;
                 transition:all 0.2s ease;
                 text-transform:uppercase;
-                font-size: ${props=>props.size==='big'?`10px`:`9px`};
+                font-size: ${props=>props.size==='big'?`9px`:`8px`};
                 ${props=>props.theme.weight2}
                 &:hover{
                     opacity:1;
@@ -166,14 +166,14 @@ export const ContentCardStyle = styled.div`
         .content_title{
             margin-bottom:5px;
             cursor:pointer;
-            font-size: ${props=>props.size==='big'?`2.4em`:`1.6em`};
+            font-size: ${props=>props.size==='big'?`2em`:`1.2em`};
             ${props=>props.theme.weight4}
         }
         .other{
             display:flex;
             gap:19px;
             opacity:0.8;
-            font-size: ${props=>props.size==='big'?`14px`:`12px`};
+            font-size: ${props=>props.size==='big'?`13px`:`11px`};
             .texts{
                 display:flex;
                 align-items:Center;
@@ -187,7 +187,7 @@ export const ContentCardStyle = styled.div`
     @media (max-width:500px){
         .text_content{
             .content_title{
-                font-size: 1.6em;
+                font-size: 1.3em;
             }
         }
     }
@@ -195,18 +195,16 @@ export const ContentCardStyle = styled.div`
 
 export const ContentCardStyle2 = styled.div`
     margin-bottom:13px;
-    // background-color:#fff;
-    // rgba(32, 32, 32, 0.5)
     width:100%;
     display:flex;
     .text_par{
         display:flex;
         flex-direction:column;
         justify-content:center;
-        width:75%;
+        width:60%;
         padding:0px 15px;
         .title{
-            font-size:14px;
+            font-size:12.5px;
             color:${props=>props.theme.textColor};
             opacity: 0.95;
             outline: none;
@@ -218,8 +216,9 @@ export const ContentCardStyle2 = styled.div`
             display:flex;
             gap:8px;
             .category{
+                white-space: nowrap;
                 ${props=>props.theme.weight2}
-                font-size:9px;
+                font-size:8px;
                 color:${props=>props.theme.textColor2}
                 display: inline-block;
                 position: relative;
@@ -245,7 +244,7 @@ export const ContentCardStyle2 = styled.div`
     }
     .img_par{
         cursor:pointer;
-        width:35%;
+        width:40%;
         height:110px;
         margin: 0;
         img{

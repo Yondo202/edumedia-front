@@ -9,6 +9,7 @@ const Hometop = () => {
     const [ leftNews, setLeftNews ] = useState([])
     const [ bigNews, setBigNews ] = useState([])
     const [ smNews, setSmNews ] = useState([])
+    
     useEffect(()=>{
         FetchData()
     },[])

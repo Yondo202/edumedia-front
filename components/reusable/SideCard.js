@@ -12,6 +12,8 @@ import { MdEmail } from "react-icons/md"
 const SideCard = ({ small, data }) => {
     const { push } = useRouter()
 
+    console.log('small', small)
+    
     if(data){
         return (
             <Container small={small} className="custom_card">
@@ -37,27 +39,23 @@ const SideCard = ({ small, data }) => {
                         </div>
                     </div>
 
-                    <div className="share_button">
-                        {/* <FacebookShareButton  imageURL={minimize(news.thumb,"medium")} title="hahaha" media={minimize(news.thumb,"small")} resetButtonStyle={true} url={`http://e-medee.mn${process.env.newsUrl}${news.Slug}`} style={{ width: 50, height: 50 }} >
-                            <div className="Btnss facebook"><FaFacebookF /></div>
-                        </FacebookShareButton> */}
+                    {small === false? <div className="share_button">
                         <FacebookShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`} >
                             <div className="Btnss facebook"><FaFacebookF /></div>
                         </FacebookShareButton>
-
                         <TwitterShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`}  >
                             <div className="Btnss twitter"><FaTwitter /></div>
                         </TwitterShareButton>
 
-                        <PinterestShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`}  >
+                        {/* <PinterestShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`}  >
                             <div className="Btnss FaPinterestP"><FaPinterestP /></div>
-                        </PinterestShareButton>
-{/* 
+                        </PinterestShareButton> */}
+                        
                         <EmailShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`}  >
                             <div className="Btnss AiOutlineMail"><MdEmail /></div>
-                        </EmailShareButton> */}
+                        </EmailShareButton>
 
-                    </div>
+                    </div>:null}
                 </div>
             </Container>
         )
@@ -125,7 +123,7 @@ const Container = styled.div`
                 .content_title{
                     padding:20px 0px;
                     cursor:pointer;
-                    font-size:${small ?`1.7em`:`3em`};
+                    font-size:${small ?`1.6em`:`2.4em`};
                     ${theme.weight4}
                 }
                 .other{

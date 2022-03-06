@@ -32,6 +32,11 @@ const Login = () => {
                 path: '/',
             })
 
+            setCookie( null, 'email', res.data.user?.email, {
+                maxAge: 30 * 24 * 60 * 60,
+                path: '/',
+            })
+
             setCookie( null, 'username', res.data.user?.username, {
                 maxAge: 30 * 24 * 60 * 60,
                 path: '/',
@@ -72,7 +77,7 @@ const Login = () => {
                 <div className="inp_par">
                     <input 
                         { ...register('password', { required: 'Нууц үгээ оруулна уу' }) }
-                        type="text"
+                        type="password"
                         onChange={e=>onChangeHandle('password', e.target.value)}
                         className={errors.password?.message?`my_inp err_style`:`my_inp`}
                         placeholder="Нууц үг" 
@@ -84,14 +89,14 @@ const Login = () => {
                 <div className="custom_handle"></div>
                 <MainButtonStyle className="custom">Нэвтрэх</MainButtonStyle>
 
-                <div className="or_line">
+                {/* <div className="or_line">
                     <span className="orr">эсвэл</span>
                 </div>
 
                 <div className="gmail_botton">
                     <img src="https://assets.toptal.io/assets/front/static/platform/icons/social/google_30739e.svg" alt='bagshinfo' />
                     <span>Емэйл - ээр нэвтрэх</span>
-                </div>
+                </div> */}
             </form>
 
         </div>

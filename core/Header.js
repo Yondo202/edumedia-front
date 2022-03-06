@@ -12,7 +12,7 @@ import MobileHeader from './MobileHeader'
 import OutsideClickHandler from 'react-outside-click-handler';
 
 const Header = ({ general }) => {
-    const { jwt, username, email } = parseCookies()
+    const { jwt, email } = parseCookies()
     const { push } = useRouter();
     const [ search, setSearch ] = useState('')
     const [ showSearch, setShowSearch ] = useState(false)
@@ -94,14 +94,17 @@ const Header = ({ general }) => {
                             
                         </div>
 
-                        <div onClick={_=>push(`/auth/login`)} className="items HomeSvg userSector">
+                        {!jwt?<div onClick={_=>push(`/auth/login`)} className="items HomeSvg userSector">
                             {/* Нэвтрэх */}
-                            {jwt?<ImUser />:<div className="username">
-                                {email?.slice(0,1)}
-                            </div>}
+                            <ImUser />
                         </div>
+                        :<div onClick={_=>push(`/auth/login`)} className="items HomeSvg userSector">
+                            <div className="username">
+                                {email?.slice(0,1)}
+                            </div>
+                        </div>}
 
-                        <div className="items">
+                        <div onClick={_=>push(`/user/insertblog`)} className="items">
                             Мэдээ оруулах
                         </div>
                     </div>

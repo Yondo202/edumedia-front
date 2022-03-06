@@ -1,338 +1,228 @@
-import React from "react"
-import { CKEditor } from '@ckeditor/ckeditor5-react'
-import CKEditors from 'ckeditor5/build/ckeditor'
+import axios from '@/global/axiosbase';
+// import ImageResize from "@ckeditor/ckeditor5-image/src/imageresize";
+import React, { useEffect, useState } from 'react'
+import styled from "styled-components"
+// import { parseCookies } from "nookies"
+import { BsImageFill } from "react-icons/bs"
+import { FaUserTie } from "react-icons/fa"
 
-const CkEditorComp = ({setValue, data}) => {
-    const [ loading, setLoading ] = React.useState(true);
-    // const [ data, setData ] = React.useState('');
+let CKEditor;
+let ClassicEditor;
 
-    React.useEffect(() => {
+// config={{ plugins: [ImageResize] }}
+
+
+const configuration = {
+    toolbar: [
+        'heading',
+        '|',
+        'fontColor',
+        'fontSize',
+        '|',
+        'bold',
+        'italic',
+        'link',
+        'bulletedList',
+        'numberedList',
+        '|',
+        'indent',
+        'outdent',
+        '|',
+        'blockQuote',
+        'insertTable',
+        'mediaEmbed',
+        'undo',
+        'redo',
+    ],
+};
+ 
+
+const CkEditor = ({ data, setData }) => {
+    const [ loading, setLoading ] = useState(true);
+    const [ active, setActive ] = useState(false);
+    // const [ data, setData ] = useState('');
+
+    useEffect(() => {
         if (typeof window === 'undefined') {
             setLoading(true);
         }else{
+            CKEditor = require( '@ckeditor/ckeditor5-react' ).CKEditor;
+            ClassicEditor = require("@ckeditor/ckeditor5-build-classic");
+            // ImageResize = require("@ckeditor/ckeditor5-image/src/imageresize");
             setLoading(false);
         }
     }, [loading]);
 
-
-    // const UploadHandle = (e) =>{
-    //     if(e.target.files.length!==0){
-    //         let file = e.target.files[0];completelyLoaded
-    //         const data = new FormData();
-    //         data.append("files", file );
-    //         axios.post(`${process.env.serverUrl}/upload`, data, { headers: {
-    //             Authorization: `Bearer ${parseCookies().jwt}`
-    //           } } ).then(res=>{
-    //             if(res.data.length){
-    //                 const imgTag = `<img src="${process.env.serverUrl+res.data[0].url}" alt="infosystem"></img>`;
-    //                 setData(prev=>`${prev} ${imgTag}`);
-    //             }
-    //         })
-    //     }
-    // }
+    const UploadHandle = (e) =>{
+        if(e.target.files.length!==0){
+            let file = e.target.files[0];
+            const data = new FormData();
+            data.append("files", file );
+            axios.post(`/upload`, data ).then(res=>{
+                if(res.data.length){
+                    const imgTag = `<img src="${process.env.serverUrl+res.data[0].url}" alt="edumendia"></img>`;
+                    // setData(prev=>`${prev} ${imgTag}`);
+                    setData('body', imgTag);
+                }
+            })
+        }
+    }
 
     return (
         <Container className="CkEditor">
+            <div className="userProfile">
+               <div className="profileImg"><FaUserTie /></div> 
+            </div>
             <div className={`activeCustom`}>
-                {CKEditors?<CKEditors
-                    height={100}
-                    editor={Editor}
-                    config={ configuration }
+                {CKEditor?<CKEditor
+                    editor={ ClassicEditor }
+                    config={ { ...configuration} }
                     data={data}
                     onChange={ ( event, editor ) => {
                         const data = editor.getData();
-                        setValue( 'short_presentation', data);
+                        setData('body' ,data);
                     }}
-                    // onBlur={ ( event, editor ) => {
-                    //     setActive(false);
-                    // }}
-                    // onFocus={ ( event, editor ) => {
-                    //     setActive(true);
-                    // }}
+                    onBlur={ ( event, editor ) => {
+                        setActive(false);
+                    }}
+                    onFocus={ ( event, editor ) => {
+                        setActive(true);
+                    }}
                    
                 />:<div>Loading...</div>}
-                {/* <div style={active?{borderTop:`1px dashed #0071ce`}:{borderTop:`1px dashed #C0C0C0`}} className="InputSector">
+                <div style={active?{borderTop:`1px dashed #0071ce`}:{borderTop:`1px dashed #C0C0C0`}} className="InputSector">
                     <label className="label" htmlFor="file-upload" ><BsImageFill /> Зураг оруулах</label>
                     <input onChange={UploadHandle} type="file" id="file-upload" accept=".png, .jpg, .jpeg" />
-                </div> */}
+                </div>
             </div>
-            
+
+            <div className="buttomPar">
+                <div className="title">
+                    {/* <InputStyle  style={{marginBottom:`0px`}}>
+                        <input className={titleRed?`red`:``} autoFocus={titleRed?true:false} value={title} onChange={(e)=>setTitle(e.target.value)} placeholder="Гарчиг" />
+                    </InputStyle> */}
+                </div>
+                {/* <button className={data===''?`Disable`:``} disabled={data===''?true:false} onClick={SendHandle}>Сэтгэгдэл үлдээх</button> */}
+            </div>
         </Container>
        
     )
 }
 
-export default CkEditorComp
+export default CkEditor
 
-// // #f6f8fa
+// #f6f8fa
 
-
-
-
-// import React, { useRef } from 'react';
-// import { Editor } from '@tinymce/tinymce-react';
-
-// function CkEditor() {
-//   const editorRef = useRef(null);
-//   const log = () => {
-//     if (editorRef.current) {
-//       console.log(editorRef.current.getContent());
-//     }
-//   };
-
-//   console.log(`uploadImage`, uploadImage)
-
-//   const uploadImage = (e, content) =>{
-//     console.log('------', e)
-//     console.log(`content`, content)
-//   }
-//   return (
-//     <>
-//       <Editor
-//         apiKey='pc8sfzbnapajt5vyup28otnlh0b7k9qqrid82r7knqqrd5bg'
-//         onInit={(evt, editor) => editorRef.current = editor}
-//         initialValue="<p>This is the initial content of the editor.</p>"
-//         init={{
-//           height: 500,
-//           menubar: false,
-//           plugins: [
-//             'advlist autolink lists link image charmap print preview anchor',
-//             'searchreplace visualblocks code fullscreen',
-//             'insertdatetime media table paste code help wordcount',
-//             'image', 'uploadimage'
-//           ],
-//           toolbar: 'undo redo | formatselect | ' +
-//           'bold italic backcolor | alignleft aligncenter ' +
-//           'alignright alignjustify | bullist numlist outdent indent | ' +
-//           'removeformat | help media image',
-//           content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-//         //   file_picker_callback: function(callback, value, meta) {
-//         //       console.log(`meta.filetype `, meta )
-//         //     // Provide file and text for the link dialog
-//         //     if (meta.filetype == 'file') {
-//         //       callback('mypage.html', {text: 'My text'});
-//         //     }
-            
-//         //     // Provide image and alt text for the image dialog
-//         //     if (meta.filetype == 'image') {
-//         //         console.log(`meta`, meta)
-//         //         callback('myimage.jpg', {alt: 'My alt text'});
-//         //     }
-
-//         //     // Provide alternative source and posted for the media dialog
-//         //     if (meta.filetype == 'media') {
-//         //       callback('movie.mp4', {source2: 'alt.ogg', poster: 'image.jpg'});
-//         //     }
-//         //   }
-
-//           images_upload_handler: async function(blobInfo, success, failure ) {
-//             let imageFile = new FormData();
-//             imageFile.append("files[]", blobInfo.blob());
-//                   console.log("object")
-
-//             try {
-//                       console.log(`imageFile`, imageFile)
-//                       // const {data} = await axios.post("http://urlToHandleFileUpload", imageFile)
-//               // success(data.fileURL);
-//             } catch (error) {
-//               handleResponseError(error);
-//               return;
-//             }
-//           }
-//         }}
-//         onEditorChange={content => uploadImage( content)}
-//       />
-//       <button onClick={log}>Log editor content</button>
-//     </>
-//   );
-// }
-// export default CkEditor
-
-
-// import React, { useEffect, useRef } from "react";
-// import styled from "styled-components"
-
-// const configuration = {
-//     toolbar: [
-//       'heading',
-//       '|',
-//     //   'fontColor',
-//     //   'fontBackgroundColor',
-//     //   'fontSize',
-//     //   '|',
-//     //   'fontColor', 'fontsize', '|',
-//       'bold',
-//       'italic',
-//       'link',
-//       'bulletedList',
-//       'numberedList',
-//       // 'ckfinder',
-//       '|',
-//       'blockQuote',
-//       "uploadImage",
-//       'AutoImage',
-//       'insertTable',
-//       'mediaEmbed',
-//       'undo',
-//       'redo',
-//       '|',
+const Container = styled.div`
+    position: relative;
+    .userProfile{
+        position: absolute;
+        left: 0;
+        top: 0;
+        .profileImg{
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #d6e2ef;
+            svg{
+                color: #586069;
+                font-size: 20px;
+            }   
+        }
+        
+    }
+    .buttomPar{
+        margin-left: 58px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .title{
+            display: flex;
+            align-items: end;
+            justify-content: end;
+            width: 50%;
+        }
+        button{
+            transition: all 0.3s ease;
+            cursor: pointer;
+            color: #fff;
+            padding: 8px 10px;
+            border-style: none;
+            outline: none;
+            border-radius: 4px;
+            background-color: ${props=>props.theme.mainColor2};
+            &:hover{
+                box-shadow: 1px 1px 15px -6px;
+                background-color: #03467d;
+            }
+        }
+        .Disable{
+            cursor: unset;
+            opacity: 0.6;
+        }
+    }
     
-//     ],
-// };
+    .activeCustom{
+        margin-left: 58px;
+        position: relative;
+        
+        &:before{
+            content:"";
+            position:absolute;
+            top: 12px;
+            left:-11px;
+            background-color: #b3b3b3;
+            width: 18px;
+            height: 18px;
+            clip-path: polygon(68% 0, 1% 50%, 68% 100%);
+            z-index: 2;
+        }
+        .InputSector{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            /* background-color: #fafafa; */
+            /* border-top: 1px dashed hsl(208, 79%, 51%, 1); */
+            /* color: hsl(208, 79%, 51%, 1); */
+            .label{
+                cursor: pointer;
+                width: 100%;
+                padding: 8px 30px;
+                color: #586069;
+                svg{
+                    margin-right: 6px;
+                    font-size: 18px;
+                }
+            }
+            input{
+                display: none;
+            }
+        }
 
-
-// function Editor({setValue, data}) {
-//    const [ loading, setLoading ] = React.useState(false);
-//   const editorRef = React.useRef();
-//   const { CKEditor, ClassicEditor } = editorRef.current || {};
-
-//   useEffect(() => {
-//     editorRef.current = {
-//       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, // v3+
-//       ClassicEditor: require("@ckeditor/ckeditor5-build-classic")
-//     };
-//     setLoading(true)
-//   }, []);
-
-//   return (
-//       <Container className="CkEditor">
-//          <div className="activeCustom">
-//             {loading ? (
-//             <CKEditor
-//                type=""
-//                editor={ClassicEditor}
-//                // config = { editorConfig }
-//                config={configuration}
-//                data={data}
-//                onChange={(event, editor) => {
-//                   const data = editor.getData();
-//                   // console.log({ event, editor, data })
-//                   setValue(data)
-//                   // onChange(data);
-//                }}
-//             />
-//             ) : (
-//             <div>Editor loading</div>
-//             )}
-//       </div>
-//       </Container>
-//   );
-// }
-
-// export default Editor;
-
-
-// const Container = styled.div`
-//     position: relative;
-//     .activeCustom{
-//         position: relative;
-//         .ck-editor{
-//             .ck-editor__main{
-//                 .ck-editor__editable_inline{
-//                     padding-bottom: 30px;
-//                     min-height:16rem !important;
-//                     // border:none;
-                    
-//                 }
-               
-//                 .ck-content{
-//                     p{
-//                         margin-bottom:7px !important; 
-//                     }
-//                 }
-//             }
-//         }
-//     }
-//     .ck.ck-reset_all, .ck.ck-reset_all * {
-//         text-align: right;
-//     }
-//     .ck-icon{
-//         opacity: 0.7;
-//         font-size: .6333350694em !important;
-//     }
-//     .ck-toolbar__grouped-dropdown{
-//         margin-top: 1px;
-//         margin-bottom: 1px;
-//     }
-// `
-
-
-
-
-
-// // import React from "react"
-// // import styled from "styled-components"
-
-// // let CKEditors;
-// // let ClassicEditor;
-
-// // const CkEditor = ({setValue, data}) => {
-// //     const [ loading, setLoading ] = React.useState(true);
-// //     // const [ data, setData ] = React.useState('');
-
-// //     React.useEffect(() => {
-// //         if (typeof window === 'undefined') {
-// //             setLoading(true);
-// //         }else{
-// //             CKEditors = require( '@ckeditor/ckeditor5-react' ).CKEditor;
-// //             ClassicEditor = require("@ckeditor/ckeditor5-build-classic");
-// //             setLoading(false);
-// //         }
-// //     }, [loading]);
-
-
-// //     // const UploadHandle = (e) =>{
-// //     //     if(e.target.files.length!==0){
-// //     //         let file = e.target.files[0];completelyLoaded
-// //     //         const data = new FormData();
-// //     //         data.append("files", file );
-// //     //         axios.post(`${process.env.serverUrl}/upload`, data, { headers: {
-// //     //             Authorization: `Bearer ${parseCookies().jwt}`
-// //     //           } } ).then(res=>{
-// //     //             if(res.data.length){
-// //     //                 const imgTag = `<img src="${process.env.serverUrl+res.data[0].url}" alt="infosystem"></img>`;
-// //     //                 setData(prev=>`${prev} ${imgTag}`);
-// //     //             }
-// //     //         })
-// //     //     }
-// //     // }
-
-// //     return (
-// //         <Container className="CkEditor">
-// //             <div className={`activeCustom`}>
-// //                 {CKEditors?<CKEditors
-// //                     height={100}
-// //                     editor={ ClassicEditor }
-// //                     config={ configuration }
-// //                     data={data}
-// //                     onChange={ ( event, editor ) => {
-// //                         const data = editor.getData();
-// //                         setValue( 'short_presentation', data);
-// //                     }}
-// //                     // onBlur={ ( event, editor ) => {
-// //                     //     setActive(false);
-// //                     // }}
-// //                     // onFocus={ ( event, editor ) => {
-// //                     //     setActive(true);
-// //                     // }}
-                   
-// //                 />:<div>Loading...</div>}
-// //                 {/* <div style={active?{borderTop:`1px dashed #0071ce`}:{borderTop:`1px dashed #C0C0C0`}} className="InputSector">
-// //                     <label className="label" htmlFor="file-upload" ><BsImageFill /> Зураг оруулах</label>
-// //                     <input onChange={UploadHandle} type="file" id="file-upload" accept=".png, .jpg, .jpeg" />
-// //                 </div> */}
-// //             </div>
-            
-// //         </Container>
-       
-// //     )
-// // }
-
-// // export default CkEditor
-
-// // // #f6f8fa
-
-
-
-
-  
+        .ck-editor{
+            .ck-editor__main{
+                .ck-editor__editable_inline{
+                    padding-bottom: 30px;
+                    min-height:20rem !important;
+                }
+            }
+        }
+    }
+    .ck.ck-reset_all, .ck.ck-reset_all * {
+        text-align: right;
+    }
+    .ck-icon{
+        opacity: 0.75;
+        font-size: .63em !important;
+    }
+    .ck-toolbar__grouped-dropdown{
+        margin-top: 1px;
+        margin-bottom: 1px;
+    }
+ 
+`

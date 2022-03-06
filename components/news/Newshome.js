@@ -9,7 +9,7 @@ const Newshome = ({data}) => {
     return (
         <>
             <Container>
-                <SideCard data={data} />
+                <SideCard small={false} data={data} />
             </Container>
             <NewsDetail data={data} />
             <Slickcards />

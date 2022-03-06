@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router"
-import { setCookie, parseCookies } from "nookies";
+import { setCookie } from "nookies";
 import { TitleStyle } from "@/miscs/CustomStyle"
 import styled from 'styled-components';
 import Link from "next/link"
 import {  MainButtonStyle } from "@/miscs/CustomStyle"
 import { BsArrowRight } from "react-icons/bs"
 // import { IoMdAdd } from "react-icons/io"
-import { RiImageAddFill } from "react-icons/ri"
 import { useForm } from "react-hook-form"
-import { EyeInvisibleOutlined, EyeTwoTone, UnlockOutlined, UserOutlined } from '@ant-design/icons';
-import { DatePicker, Select, Input, InputNumber, Upload, Tooltip } from 'antd';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone, UnlockOutlined } from '@ant-design/icons';
+import { Select, Input, Tooltip } from 'antd';
 import axios from "@/global/axiosbase"
 import AlertMessage from '@/miscs/AlertMessage';
 const { Option } = Select
@@ -23,11 +21,7 @@ import NProgress from 'nprogress';
 
 const Signup = () => {
     const { push } = useRouter()
-    const { jwt } = parseCookies();
-    const [ step, setStep ] = useState(0);
     const [ category, setcategory ] = useState([])
-
-    const [ profileId, setProfileId ] = useState(null)
 
     const { register, handleSubmit, formState: { errors }, clearErrors, reset, setValue, watch, setError } = useForm({
         defaultValues: {
@@ -69,6 +63,11 @@ const Signup = () => {
     const SignFirst = async (data) => {
         try{
             let res = await axios.post(`/auth/local/register`, data )
+
+            setCookie( null, 'user_id', res.data.user?.id, {
+                maxAge: 30 * 24 * 60 * 60,
+                path: '/',
+            })
 
             setCookie( null, 'jwt', res.data.jwt, {
                 maxAge: 30 * 24 * 60 * 60,
@@ -121,7 +120,7 @@ const Signup = () => {
 
   return(
     <>
-    <Container className="container" page={step}>
+    <Container className="container">
        
         <div className="bodys">
             <div className="main_content" >
@@ -255,10 +254,8 @@ const Container = styled.div`
                 }
                 .inputs_body{
                     transition:all 0.3s ease;
-                    // transform:translateX(-${props=>props.page}00%);
                     width:100%;
                     height:100%;
-
                     .gmail_botton{
                         display:flex;
                         align-items:center;

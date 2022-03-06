@@ -5,7 +5,6 @@ import SideNews from '@/components/reusable/SideNews'
 import axios from "@/global/axiosbase"
 
 const Homecontents = () => {
-
     const [ leftNews, setLeftNews ] = useState([])
     const [ bigNews, setBigNews ] = useState([])
     const [ smNews, setSmNews ] = useState([])

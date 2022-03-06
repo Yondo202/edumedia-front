@@ -24,7 +24,7 @@ const PagesHome = ({ data, category}) => {
         <Container>
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-md-9 col-12">
+                    <div className="col-md-8 col-12">
                         <TitleStyle><span className="text">{ route !== '/search'? category?.attributes.name: `Хайлтын үр дүн  (${stateData.length})` }  </span></TitleStyle>
                         {route !== '/search'?
                             data?.map((el,ind)=>{
@@ -39,7 +39,7 @@ const PagesHome = ({ data, category}) => {
                             })
                         }
                     </div>
-                    <div className="col-md-3 col-12">
+                    <div className="col-md-4 col-12">
                         <SideNews />
                     </div>
                 </div>
