@@ -98,7 +98,7 @@ const Header = ({ general }) => {
                             {/* Нэвтрэх */}
                             <ImUser />
                         </div>
-                        :<div onClick={_=>push(`/auth/login`)} className="items HomeSvg userSector">
+                        :<div className="items HomeSvg userSector">
                             <div className="username">
                                 {email?.slice(0,1)}
                             </div>
@@ -255,6 +255,7 @@ const Container = styled.div`
                 }
             }
             .userSector{
+                position:relative;
                 padding:0px 12px !important;
                 .username{
                     text-transform:uppercase;

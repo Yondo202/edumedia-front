@@ -23,7 +23,7 @@ const Signup = () => {
     const { push } = useRouter()
     const [ category, setcategory ] = useState([])
 
-    const { register, handleSubmit, formState: { errors }, clearErrors, reset, setValue, watch, setError } = useForm({
+    const { register, handleSubmit, formState: { errors }, clearErrors, setValue, watch, setError } = useForm({
         defaultValues: {
             username: null,
             email: null,
@@ -87,8 +87,7 @@ const Signup = () => {
             // setProfileId(res.data.user?.id)
             
             AlertMessage(`Амжилттай бүртгэгдлээ`, 'success');
-            push('/')
-            window.scrollTo(0, 0);
+            push('/user/insertblog')
 
         }catch(err){
             if ( err?.response?.data?.error?.message === "Email is already taken" ){

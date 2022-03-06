@@ -11,7 +11,7 @@ import AlertMessage from '@/miscs/AlertMessage';
 import Router from 'next/router'
 
 const Login = () => {
-    const { register, handleSubmit, formState: { errors }, clearErrors, reset, setValue, watch, setError } = useForm({
+    const { register, handleSubmit, formState: { errors }, clearErrors, setValue, watch } = useForm({
         defaultValues: {
             identifier: null,
             password: null
@@ -43,7 +43,7 @@ const Login = () => {
             })
 
             AlertMessage('Амжилттай нэвтэрлээ', 'success')
-            Router.push('/')
+            Router.push('/user/insertblog')
 
         }).catch(_=>{
             AlertMessage('Нэвтрэх нэр юмуу нууц үг буруу байна!', 'warning')

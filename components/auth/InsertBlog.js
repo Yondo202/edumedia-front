@@ -61,6 +61,7 @@ const InsertBlog = () => {
     });
 
     useEffect(()=>{
+        window.scrollTo(0, 170);
         void async function fetch(){
             try{
                 let less =  await axios.get(`/categories`)
