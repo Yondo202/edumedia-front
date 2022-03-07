@@ -8,7 +8,6 @@ const Blog = ({ data, category }) => {
         <Root >
             <PagesHome data={data} category={category} />
         </Root>
-
     );
 };
 

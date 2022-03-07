@@ -16,6 +16,11 @@ const Blog = ({ news }) => {
 
 export default Blog;
 
+// export async function getServerSideProps({ params, req }) {
+//     const res = await Axios(process.env.serverUrl + '/api/home?populate=deep,4')
+//     return { props: { data: res.data?.data?.attributes } }
+// }
+
 export async function getServerSideProps({params, req}){
     let data = await axios.get(`/posts/${params.id}/?populate=*`)
     if(data.data.data){

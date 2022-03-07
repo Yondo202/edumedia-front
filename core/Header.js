@@ -1,11 +1,12 @@
 import React, { useState  } from 'react'
-import { setCookie, parseCookies } from "nookies";
+import { smoothSm } from "@/miscs/CustomStyle"
+import { parseCookies, destroyCookie } from "nookies";
 import { useRouter } from 'next/router'
 import styled, { keyframes } from 'styled-components'
 import { MenuContext } from '@/global/ContextMenuProvider'
 import { FaHome } from "react-icons/fa"
 import { BiSearchAlt } from "react-icons/bi"
-import { AiOutlineMenu } from "react-icons/ai"
+import { AiOutlineMenu, AiOutlineUser, AiOutlineArrowRight } from "react-icons/ai"
 import { ImUser } from "react-icons/im"
 import MobileHeader from './MobileHeader'
 // import useWindowDimensions from '@/miscs/WindowDeminsion'
@@ -20,6 +21,8 @@ const Header = ({ general }) => {
     // const [scrollY, setScrollY] = useState(0);
     // const [ name, setName ] = useState('')
     const [visible, setVisible] = useState(false);
+
+    const [visibleLog, setVisibleLog] = useState(false);
   
 
     // function logit() {
@@ -36,10 +39,19 @@ const Header = ({ general }) => {
     //     };
     // }, []);
 
-    // console.log(`width--->`, config.width)
+    const LogOut = () =>{
+        destroyCookie(null, 'jwt')
+        destroyCookie(null, 'email')
+        destroyCookie(null, 'user_id')
+        destroyCookie(null, 'username')
+        push('/')
+    }
 
     const globalClick = () =>{
         setShowSearch(false)
+    }
+    const globalClick2 = () =>{
+        setVisibleLog(false)
     }
 
     const Submithandle = (e) =>{
@@ -98,10 +110,27 @@ const Header = ({ general }) => {
                             {/* Нэвтрэх */}
                             <ImUser />
                         </div>
-                        :<div className="items HomeSvg userSector">
-                            <div className="username">
+                        :<div className="items userSector">
+                            <div onClick={_=>setVisibleLog(true)} className="username">
                                 {email?.slice(0,1)}
                             </div>
+                            
+                            {visibleLog&&<OutsideClickHandler
+                                onOutsideClick={() => globalClick2()}
+                            >
+                                <div className="setting_modal">
+                                    <div className="modal_item">
+                                        <div className="svgs"><AiOutlineUser /></div>
+                                        <span className="text">{email}</span>  
+                                    </div>
+
+                                    <div onClick={LogOut} className="modal_item">
+                                        <div className="svgs"><AiOutlineArrowRight /></div>
+                                        <span className="text">Гарах</span>  
+                                    </div>
+                                </div>
+                            </OutsideClickHandler>}
+                            
                         </div>}
 
                         <div onClick={_=>push(`/user/insertblog`)} className="items">
@@ -282,6 +311,49 @@ const Container = styled.div`
                         height:9px;
                         width:9px;
                         border-radius:50%;
+                    }
+                }
+                .setting_modal{
+                    animation:${smoothSm} 0.3s ease;
+                    cursor: auto !important;
+                    position:absolute;
+                    top:122%;
+                    right:0;
+                    background-color: #fff; 
+                    color: ${props=>props.theme.textColor}; 
+                    font-size:15px;
+                    z-index:4;
+                    border-radius:8px;
+                    box-shadow:0px 0px 16px -7px #000; 
+                    padding:12px 20px;
+                    .modal_item{
+                        cursor:pointer;
+                        display:flex;
+                        align-items:center;
+                        padding:14px 0px;
+                        gap:17px;
+                        .svgs{
+                            // margin-right:10px;
+                            background-color:rgba(0,0,0,0.057);
+                            height:34px;
+                            width:34px;
+                            border-radius:50%;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            svg{
+                                font-size:20px;
+                            }
+                        }
+                        .text{
+                            margin-right:8px;
+                            display: inline-block;
+                            overflow: hidden;
+                            white-space: nowrap;
+                        }
+                        &:hover{
+                            color: ${props=>props.theme.textColor2}; 
+                        }
                     }
                 }
             }

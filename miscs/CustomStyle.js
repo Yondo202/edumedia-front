@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const MainButtonStyle = styled.button`
     background-color:${props=>props.color==="false"?`#fff`:props.theme.mainColor2};
@@ -78,6 +78,7 @@ export const TitleStyle = styled.div`
 
 export const ContentCardStyle = styled.div`
     width:100%;
+    height:100%;
     margin-bottom: ${props=>props.size==='big'?`0px`:`15px`};
     position:relative;
     .image_par{
@@ -100,7 +101,7 @@ export const ContentCardStyle = styled.div`
         }
         img{
             width:100%;
-            height:auto;
+            height:100%;
             object-fit:cover;
         }
         @media screen and (max-width: 1366px) and (min-width: 1026px){
@@ -259,4 +260,13 @@ export const ContentCardStyle2 = styled.div`
             height: 100px;
         }
     }
+`
+
+export const smoothSm = keyframes`
+    0%{ transform:translateY(5px); opacity:0; }
+    100%{ transform:translateY(0px); opacity:1; }
+`
+export const smooth2Sm = keyframes`
+    0%{ transform:translateY(0px); opacity:1; }
+    100%{ transform:translateY(5px); opacity:0; }
 `
