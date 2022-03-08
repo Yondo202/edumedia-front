@@ -1,24 +1,29 @@
 import React from 'react'
+import minimize from '@/miscs/minimize';
 import styled from 'styled-components'
 import { FaFacebookF, FaInstagram , FaTwitter, FaPhoneAlt} from "react-icons/fa"
 import { GrMail } from "react-icons/gr"
 
 
-const Footer = () => {
+const Footer = ({ general }) => {
     return (
         <Container>
             <div className="content_parent">
 
                 <div className="col_items">
                     <div className="title">edumedia</div>
-                    <img src="/img/logo_small.png" alt="bagshinfo_logo" />
+                    <img src={minimize(general?.logoSm?.data?.attributes)} alt="bagshinfo_logo" />
                 </div>
                 <div className="col_items">
                     <div className="title">Меню</div>
                     <div className="text_par">
-                        <div className="texts">Багш хайх</div>
-                        <div className="texts">Сурах бичиг</div>
-                        <div className="texts">Нэвтрэх</div>
+                        {general?.menu?.slice(0.5).map((el,ind)=>{
+                            return(
+                                <div onClick={_=>push(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.news?.data?.attributes.url}`)} key={ind} className="texts">
+                                    {el.text??el.news?.data?.attributes.name}
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
 
@@ -40,7 +45,7 @@ const Footer = () => {
                 
             </div>
             <div className="container final_text">
-                © 2022 он. edumedia зохиогчийн эрхээр хамгаалагдсан.
+                {general?.copyright}
             </div>
         </Container>
     )

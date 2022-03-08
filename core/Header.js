@@ -1,4 +1,5 @@
 import React, { useState  } from 'react'
+import minimize from '@/miscs/minimize';
 import { smoothSm } from "@/miscs/CustomStyle"
 import { parseCookies, destroyCookie } from "nookies";
 import { useRouter } from 'next/router'
@@ -60,15 +61,21 @@ const Header = ({ general }) => {
         setShowSearch(false)
     }
 
+    console.log('general', general)
+
     return (
         <>
             <TopHeadStyle>
                 <div className="inner">
                     <div className="logo_par">
-                        <img onClick={_=>push(`/`)} src="/img/logo_nonb.png" alt="edumedia_logo" />
+                        <img onClick={_=>push(`/`)} src={minimize(general?.logoBig?.data?.attributes)} alt="edumedia_logo" />
                     </div>
                     <div className="logo_par logo_par2">
-                        <img src="https://demo.afthemes.com/newsever-pro/light/wp-content/uploads/sites/3/2020/04/banner-promotion-1200.jpg" alt="bunner" />
+                        {general?.TopBunner?.slice(0,1).map((el,ind)=>{
+                            return(
+                                <img key={ind} src={minimize(el.image?.data?.attributes)} alt="bunner" />
+                            )
+                        })}
                     </div>
                 </div>
             </TopHeadStyle>
@@ -82,12 +89,32 @@ const Header = ({ general }) => {
 
                         { config.width < 860 ? <div className="mobile_icon" onClick={_=>setVisible(true)}>
                             <AiOutlineMenu />
-                        </div>: general?.Menu?.map((el,ind)=>{
+                        </div>: 
+                        <>
+                            {general?.menu?.map((el,ind)=>{
                                 return(
-                                    <div onClick={_=>push(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.url}`)} key={ind} className="items">{el.name}</div>
+                                    <div onClick={_=>push(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.news?.data?.attributes.url}`)} key={ind} className="items">
+                                        {el.text??el.news?.data?.attributes.name}
+                                    </div>
                                 )
-                        }) }
-                       {config.width < 860 ? <MobileHeader data={general?.Menu??[]} visible={visible} setVisible={setVisible} /> : null }
+                            })}
+                            {general?.subMenu?.length !== 0 ?<div className="items others">
+                                Бусад
+                                <div className="other_par">
+                                    {general?.subMenu?.map((el,ind)=>{
+                                        return(
+                                            <div onClick={_=>push(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.news?.data?.attributes.url}`)} key={ind} className="sub_items">
+                                                {el.text??el.news?.data?.attributes.name}
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>:null}
+                        </>
+                                
+                        
+                        }
+                       {config.width < 860 ? <MobileHeader data={[...general?.menu, ...general?.subMenu]??[]} visible={visible} setVisible={setVisible} /> : null }
                     </div>
                     <div className="left_sector right">
                         <div className="search_div">
@@ -110,7 +137,7 @@ const Header = ({ general }) => {
                             {/* Нэвтрэх */}
                             <ImUser />
                         </div>
-                        :<div className="items userSector">
+                        :<div className="userSector">
                             <div onClick={_=>setVisibleLog(true)} className="username">
                                 {email?.slice(0,1)}
                             </div>
@@ -174,6 +201,7 @@ const TopHeadStyle = styled.div`
                 width:100%;
                 height:auto;
                 object-fit:contain;
+                max-height:200px;
             }
         }
         .logo_par2{
@@ -269,6 +297,33 @@ const Container = styled.div`
                     }
                 }
             }
+            .others{
+                position:relative;
+                .other_par{
+                    display:none;
+                    animation:${smoothSm} 0.3s ease;
+                    box-shadow:0px 0px 16px -7px #000; 
+                    position:absolute;
+                    top:100%;
+                    right:0;
+                    background-color:#fff;
+                    z-index:4;
+                    border-radius:5px;
+                    .sub_items{
+                        padding:10px 28px;
+                        font-size:13px;
+                        color:${props=>props.theme.textColor};
+                        &:hover{
+                            background-color:rgba(0,0,0,0.057);
+                        }
+                    }
+                }
+                &:hover{
+                    .other_par{
+                        display:block;
+                    }
+                }
+            }
             .HomeSvg{
                 &:after{
                     display:none;
@@ -286,6 +341,13 @@ const Container = styled.div`
             .userSector{
                 position:relative;
                 padding:0px 12px !important;
+                font-size: 11.5px;
+                white-space:nowrap;
+                display:flex;
+                align-items:center;
+                height:100%;
+                cursor:pointer;
+                ${props=>props.theme.weight2}
                 .username{
                     text-transform:uppercase;
                     ${props=>props.theme.weight4}

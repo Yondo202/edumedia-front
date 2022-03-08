@@ -29,7 +29,6 @@ const MyApp = ({ Component, pageProps, router  }) =>{
     config: {},
     general: {}
   })
-  const [ completelyLoaded, setCompletelyLoaded ] = useState(false);
 
   useEffect(()=>{
     Fetch()
@@ -38,24 +37,12 @@ const MyApp = ({ Component, pageProps, router  }) =>{
   const Fetch = async () =>{
     const config = { width: window.innerWidth, height: window.innerHeight };
     try{
-      const query = qs.stringify({
-        // populate:"*"
-        populate:{
-          Menu:{
-            populate:"*"
-          }
-        }
-      },
-      {
-        encodeValuesOnly: true,
-      }
-    );
     // logoBig
     // logoSm
 
-      let res = await axios.get(`/setting?${query}`)
+      let res = await axios.get(`/setting?populate=deep,4`)
 
-      setState({ completelyLoaded:true, config:config, general:res?.data?.data?.attributes  })
+      setState({ config:config, general:res?.data?.data?.attributes, completelyLoaded:true  })
     }catch{
       return {}
     }

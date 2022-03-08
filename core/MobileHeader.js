@@ -5,6 +5,7 @@ import { Drawer } from "antd"
 
 
 const MobileHeader = ({ visible, setVisible, data }) => {
+    console.log('data', data)
     const { push } = useRouter()
     return (
         <Drawer
@@ -26,7 +27,9 @@ const MobileHeader = ({ visible, setVisible, data }) => {
             <Container>
                 {data.map((el,ind)=>{
                     return(
-                        <p onClick={_=>(push(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.url}`), setVisible(false) ) } className="lists" key={ind}>{el.name}</p>
+                        <p onClick={_=>(push(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.news?.data?.attributes.url}`), setVisible(false) ) } className="lists" key={ind}>
+                            {el.text??el.news?.data?.attributes.name}
+                        </p>
                     )
                 })}
             </Container>

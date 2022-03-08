@@ -57,7 +57,11 @@ const Container = styled.div`
             line-height: 1.7;
             ${theme.weight}
         }
-      
+        @media (max-width:768px){
+            .content_body{
+                padding-right:0px;
+            }
+        }
     `;
 }}
 `

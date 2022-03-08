@@ -6,17 +6,15 @@ import Footer from '@/core/Footer'
 import PreSeo from '@/miscs/PreSeo'
 
 
-const Root = ({children, seo}) => {
-    const { general } = React.useContext(MenuContext)
-
+const Root = ({ children, seo }) => {
+    const { general, completelyLoaded } = React.useContext(MenuContext);
     return (
-        <Body seo={seo}>
+        completelyLoaded?<Body seo={seo}>
             <PreSeo seo={seo}/>
-
             <Header general={general} />
                 {children}
-            <Footer />
-        </Body>
+            <Footer general={general}  />
+        </Body>:null
     )
 }
 
