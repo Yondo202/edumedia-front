@@ -19,8 +19,6 @@ const settings = {
 const TopBunner = ({ data }) => {
     const sliderRef = React.useRef();
 
-    console.log('data', data)
-
     return (
         <div className="logo_par logo_par2">
             <ReactSlider 

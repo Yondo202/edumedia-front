@@ -16,15 +16,11 @@ const ContentCard = ({ size, position, dark, read_hide, under_cat, data }) => {
     };
 
     const PushHandle = (id) =>{
-        console.log('id', id)
         if(id){
             push(`${process.env.frontUrl}/usernews/${id}`)
         }
     }
 
-    console.log('datas', data)
-    
-    // onClick={_=>handleClick(`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`)}
     if(data){
         return (
             <ContentCardStyle under_cat={under_cat} size={size} position={position} dark={dark}>

@@ -18,8 +18,6 @@ const SideCard = ({ small, data }) => {
         }
     }
 
-    console.log('small', small)
-
     if(data){
         return (
             <Container small={small} className="custom_card">
