@@ -12,6 +12,7 @@ import { ImUser } from "react-icons/im"
 import MobileHeader from './MobileHeader'
 // import useWindowDimensions from '@/miscs/WindowDeminsion'
 import OutsideClickHandler from 'react-outside-click-handler';
+import TopBunner from './TopBunner';
 
 const Header = ({ general }) => {
     const { jwt, email } = parseCookies()
@@ -46,6 +47,7 @@ const Header = ({ general }) => {
         destroyCookie(null, 'user_id')
         destroyCookie(null, 'username')
         push('/')
+        setVisibleLog(false)
     }
 
     const globalClick = () =>{
@@ -61,8 +63,6 @@ const Header = ({ general }) => {
         setShowSearch(false)
     }
 
-    console.log('general', general)
-
     return (
         <>
             <TopHeadStyle>
@@ -70,13 +70,7 @@ const Header = ({ general }) => {
                     <div className="logo_par">
                         <img onClick={_=>push(`/`)} src={minimize(general?.logoBig?.data?.attributes)} alt="edumedia_logo" />
                     </div>
-                    <div className="logo_par logo_par2">
-                        {general?.TopBunner?.slice(0,1).map((el,ind)=>{
-                            return(
-                                <img key={ind} src={minimize(el.image?.data?.attributes)} alt="bunner" />
-                            )
-                        })}
-                    </div>
+                    <TopBunner data={general.TopBunner} />
                 </div>
             </TopHeadStyle>
             <Container  >
@@ -206,6 +200,15 @@ const TopHeadStyle = styled.div`
         }
         .logo_par2{
             width:65%;
+            .slick-slider{
+                width:100%;
+                img{
+                    width:100%;
+                    height:auto;
+                    object-fit:contain;
+                    max-height:100px;
+                }
+            }
         }
     }
     @media (max-width:768px){
@@ -414,7 +417,7 @@ const Container = styled.div`
                             white-space: nowrap;
                         }
                         &:hover{
-                            color: ${props=>props.theme.textColor2}; 
+                            color: ${props=>props.theme.mainColor}; 
                         }
                     }
                 }

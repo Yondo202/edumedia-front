@@ -4,21 +4,19 @@ import NewsDetail from './NewsDetail'
 // import Slickcards from '@/dynamic/Slickcards'
 import SideCard from '@/components/reusable/SideCard'
 
-
 const Newshome = ({data}) => {
     return (
         <>
             <Container>
                 <SideCard small={false} data={data} />
             </Container>
-            <NewsDetail data={data} />
+            <NewsDetail data={data} user={data?.attributes?.user?.data} />
             {/* <Slickcards /> */}
         </>
     )
 }
 
 export default Newshome
-
 
 const Container = styled.div`
     ${({theme})=>`

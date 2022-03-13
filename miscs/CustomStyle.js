@@ -52,7 +52,7 @@ export const TitleStyle = styled.div`
         position: relative;
         z-index: 1;
         padding: 5px 5px 15px 0;
-        text-transform: uppercase;
+        // text-transform: uppercase;
         &:before{
             content:'';
             position: absolute;
@@ -181,6 +181,12 @@ export const ContentCardStyle = styled.div`
                 svg{
                     margin-right:4px;
                     font-size:15px;
+                }
+            }
+            .writer{
+                cursor:pointer;
+                &:hover{
+                    color:${props=>props.theme.mainColor};
                 }
             }
         }

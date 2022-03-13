@@ -30,8 +30,5 @@ const Container = styled.div`
         margin-bottom:60px;
         background-color:#fff;
         padding:20px;
-        .contents_par{
-
-        }
     `}
 `

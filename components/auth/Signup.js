@@ -47,7 +47,6 @@ const Signup = () => {
 
     const state = watch()
 
-
     const onSubmit =_=> {
         if(state.password_again !== state.password){
             setError('password_again', { message: "Нууц үг адил биш байна", })
@@ -58,7 +57,6 @@ const Signup = () => {
             SignFirst(state)
         }
     };
-
 
     const SignFirst = async (data) => {
         try{
@@ -129,7 +127,7 @@ const Signup = () => {
 
                     <form onSubmit={handleSubmit(onSubmit)} className="inputs_body">
                         <div className="input_par">
-                            <div className="label">Нэр <span className="required">*</span></div>
+                            <div className="label">Нийтлэгчийн нэр <span className="required">*</span></div>
                             <Input
                                 { ...register('username', { required: 'Нэр ээ оруулна уу' }) }
                                 className={errors.username?.message?`err_style`:``}

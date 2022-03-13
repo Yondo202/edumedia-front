@@ -1,33 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from "@/global/axiosbase"
+import CustomParser from '@/miscs/CustomParser';
 import styled from 'styled-components'
 import { TitleStyle } from "@/miscs/CustomStyle";
 import SideNews from '@/components/reusable/SideNews'
 import ContentCard from '@/components/reusable/ContentCard'
 
-const NewsDetail = () => {
+const NewsDetail = ({ data, user }) => {
+    const [ myData, setMyData ] = useState([])
+
+    useEffect(()=>{
+        void async function Fetch(){
+            let datas = await axios.get(`/posts?populate=*&sort[0]=createdAt:desc&filters[user][id][$eq]=${user?.id}&filters[id][$ne]=${data?.id}&pagination[start]=0&pagination[limit]=3`)
+            setMyData(datas?.data?.data)
+        }()
+    },[data])
+
     return (
         <Container>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-9 col-12">
                         <div className="content_body">
-                            Lorem ipsum dolor sit amet,sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, no sea takimata sanctus est Lorem ipsum dolor sit amet. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. no sea takimata sanctus est Lorem ipsum dolor sit amet. no sea takimata sanctus est Lorem ipsum dolor sit amet. sed diam voluptua.
-                            Lorem ipsum dolor sit amet,sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, no sea takimata sanctus est Lorem ipsum dolor sit amet. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. no sea takimata sanctus est Lorem ipsum dolor sit amet. no sea takimata sanctus est Lorem ipsum dolor sit amet. sed diam voluptua.
+                            <CustomParser data={data?.attributes?.body} />
                         </div>
-                        <div className="more_news">
-                            <TitleStyle><span className="text">Trending</span></TitleStyle>
+                        {myData?.length > 0?<div className="more_news">
+                            <TitleStyle><span className="text">Холбогдолтой</span></TitleStyle>
                             <div className="row">
-                                <div className="col-md-4 col-12">
-                                    <ContentCard />
-                                </div>
-                                <div className="col-md-4 col-12">
-                                    <ContentCard />
-                                </div>
-                                <div className="col-md-4 col-12">
-                                    <ContentCard />
-                                </div>
+                                {myData.map((el,ind)=>{
+                                    return(
+                                        <div key={ind} className="col-md-4 col-12">
+                                            <ContentCard data={el} />
+                                        </div>
+                                    )
+                                })}
                             </div>
-                        </div>
+                        </div>:null}
                     </div>
                     <div className="col-md-3 col-12">
                         <SideNews />

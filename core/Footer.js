@@ -44,7 +44,7 @@ const Footer = ({ general }) => {
                 </div>
                 
             </div>
-            <div className="container final_text">
+            <div className="final_text">
                 {general?.copyright}
             </div>
         </Container>
@@ -60,6 +60,7 @@ const Container = styled.div`
         color:#fff;
         padding-top:80px;
         .final_text{
+            ${theme.containerWrap}
             border-top: 1px solid hsla(0,0%,100%,.2);
             margin-top:60px;
             padding-bottom:60px;

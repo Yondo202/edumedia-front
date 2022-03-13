@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { WiTime4 } from "react-icons/wi"
 import { AiOutlineUser } from "react-icons/ai"
@@ -6,12 +6,32 @@ import { ContentCardStyle } from "@/miscs/CustomStyle"
 import minimize from '@/miscs/minimize'
 
 const ContentCard = ({ size, position, dark, read_hide, under_cat, data }) => {
+    const [mouseMoved, setMouseMoved] = useState(false);
     const { push } = useRouter()
 
+    const handleClick = (link) => {
+        if (!mouseMoved) {
+            push(link);
+        }
+    };
+
+    const PushHandle = (id) =>{
+        console.log('id', id)
+        if(id){
+            push(`${process.env.frontUrl}/usernews/${id}`)
+        }
+    }
+
+    console.log('datas', data)
+    
+    // onClick={_=>handleClick(`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`)}
     if(data){
         return (
             <ContentCardStyle under_cat={under_cat} size={size} position={position} dark={dark}>
-                <div onClick={_=>push(`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`)} className="image_par">
+                <div
+                onMouseMove={() => setMouseMoved(true)} onMouseDown={() => setMouseMoved(false)}
+                onMouseUp={_=>handleClick(`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`)}
+                className="image_par">
                     <img
                         src={minimize(data?.attributes?.image?.data?.attributes, 'large')}
                         alt="eduinfo"
@@ -26,15 +46,22 @@ const ContentCard = ({ size, position, dark, read_hide, under_cat, data }) => {
                     <div className="category_par">
                         {data?.attributes?.categories?.data?.slice(0,2).map((el,ind)=>{
                             return(
-                                <span onClick={_=>push(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.id}`)} key={ind} className="category">{el.attributes?.name}</span>
+                                <span 
+                                onMouseMove={() => setMouseMoved(true)} onMouseDown={() => setMouseMoved(false)}
+                                onMouseUp={_=>handleClick(`${process.env.frontUrl}/${process.env.categoryUrl}/${el.id}`)} key={ind} className="category">{el.attributes?.name}</span>
                             )
                         })}
                     </div>
-                    <div onClick={_=>push(`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`)} className="content_title">{data?.attributes?.title}</div>
+                    <div
+                        onMouseMove={() => setMouseMoved(true)} onMouseDown={() => setMouseMoved(false)}
+                        onMouseUp={_=>handleClick(`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`)} className="content_title"
+                    >
+                        {data?.attributes?.title}
+                    </div>
         
                     <div className="other">
                         <div className="texts date"><WiTime4 /> {data.attributes?.createdAt.slice(0,10)}</div>
-                        <div className="texts writer"><AiOutlineUser /> EduMedia</div>
+                        <div onClick={_=>PushHandle(data?.attributes?.user?.data?.id)} className="texts writer"><AiOutlineUser />{data?.attributes?.user?.data?.attributes?.username??`EduMedia`}</div>
                     </div>
                 </div>
             </ContentCardStyle>

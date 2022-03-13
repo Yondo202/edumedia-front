@@ -12,12 +12,18 @@ import { MdEmail } from "react-icons/md"
 const SideCard = ({ small, data }) => {
     const { push } = useRouter()
 
+    const PushHandle = (id) =>{
+        if(id){
+            push(`${process.env.frontUrl}/usernews/${id}`)
+        }
+    }
+
     console.log('small', small)
-    
+
     if(data){
         return (
             <Container small={small} className="custom_card">
-                <div  onClick={_=>push(`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`)} className="image_par">
+                <div onClick={_=>push(`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`)} className="image_par">
                     <img src={minimize(data.attributes.image?.data?.attributes)} alt="edumedia_img" />
                 </div>
                 <div className="text_content">
@@ -32,30 +38,30 @@ const SideCard = ({ small, data }) => {
                             {/* <span className="category">media</span> */}
                         </div>
                         <div  onClick={_=>push(`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`)} className="content_title">{data.attributes?.title}</div>
-        
                         <div className="other">
                             <div className="texts date"><WiTime4 /> {data.attributes?.createdAt.slice(0,10)}</div>
-                            <div className="texts writer"><AiOutlineUser />EduMedia</div>
+                            <div onClick={_=>PushHandle(data?.attributes?.user?.data?.id)} className="texts writer"><AiOutlineUser />{data?.attributes?.user?.data?.attributes?.username??`EduMedia`}</div>
                         </div>
                     </div>
 
-                    {small === false? <div className="share_button">
-                        <FacebookShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`} >
+                    {small === false? <div className="share_buttonss">
+                        <FacebookShareButton style={{display:`block !important`}} resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`} >
                             <div className="Btnss facebook"><FaFacebookF /></div>
                         </FacebookShareButton>
                         <TwitterShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`}  >
                             <div className="Btnss twitter"><FaTwitter /></div>
                         </TwitterShareButton>
 
-                        {/* <PinterestShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`}  >
+                        <PinterestShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`}  >
                             <div className="Btnss FaPinterestP"><FaPinterestP /></div>
-                        </PinterestShareButton> */}
+                        </PinterestShareButton>
                         
                         <EmailShareButton resetButtonStyle={true} url={`${process.env.frontUrl}/${process.env.newsUrl}/${data.id}`}  >
                             <div className="Btnss AiOutlineMail"><MdEmail /></div>
                         </EmailShareButton>
 
                     </div>:null}
+                    
                 </div>
             </Container>
         )
@@ -140,11 +146,20 @@ const Container = styled.div`
                             font-size:18px;
                         }
                     }
+                    .writer{
+                        cursor:pointer;
+                        &:hover{
+                            color:${theme.mainColor};
+                        }
+                    }
                 }
-                .share_button{
-                    // margin-bottom:9px;
-                    display:flex;
+
+                .share_buttonss{
+                    display:flex !important;
                     gap:18px;
+                    .react-share__ShareButton{
+                        display:block !important;
+                    }
                     .Btnss{
                         border-radius:50%;
                         color:#ffffff;

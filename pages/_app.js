@@ -11,7 +11,7 @@ import { MenuProvider } from "@/global/ContextMenuProvider";
 import { parseCookies } from "nookies";
 import NProgress from 'nprogress';
 import axios from '@/global/axiosbase';
-import qs from 'qs'
+// import qs from 'qs'
 // import '../public/css/style.css'
 
 // function MyApp({ Component, pageProps }) {
@@ -37,19 +37,13 @@ const MyApp = ({ Component, pageProps, router  }) =>{
   const Fetch = async () =>{
     const config = { width: window.innerWidth, height: window.innerHeight };
     try{
-    // logoBig
-    // logoSm
-
       let res = await axios.get(`/setting?populate=deep,4`)
-
       setState({ config:config, general:res?.data?.data?.attributes, completelyLoaded:true  })
     }catch{
       return {}
     }
-    
   }
 
-  
   return(
     <ConfigProvider locale={mnMN}>
       <ThemeProvider theme={theme}>
@@ -80,7 +74,7 @@ MyApp.getInitialProps = async({ Component, ctx }) =>{
 
 
   if(!jwt){
-    if( ctx.pathname.includes("/insertblog") ){
+    if( ctx.pathname.includes("/insertblog") || ctx.pathname.includes("/profile") ){
         redirectUser(ctx, "/auth/login");
     }
   }

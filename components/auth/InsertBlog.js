@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import axios from "@/global/axiosbase"
+import { useRouter } from 'next/router'
 import CKEditor from '@/miscs/CKeditor';
 import AlertMessage from '@/miscs/AlertMessage';
 import NProgress from 'nprogress';
 import { BsLayoutTextWindow } from "react-icons/bs"
 import { setCookie, parseCookies } from "nookies";
 import { RiImageAddFill } from "react-icons/ri"
-import { DatePicker, Select, Input, InputNumber, Upload, Tooltip } from 'antd';
+import { Select, Input, Upload } from 'antd';
 import { TitleStyle, MainButtonStyle } from "@/miscs/CustomStyle";
 import styled from 'styled-components'
 import { useForm } from "react-hook-form"
@@ -46,10 +47,13 @@ const Initial = {
     image:null,
     body:'',
     read_range:null,
-    position:null
+    // position:null
 }
 
 const InsertBlog = () => {
+    const { query, back } = useRouter()
+    let newsId = query?.edit_id
+    // edit_id
     const { jwt, user_id } = parseCookies();
     const [ imageLoad, setImageLoad ] = useState(false);
     
@@ -71,6 +75,22 @@ const InsertBlog = () => {
             }
         }()
     },[])
+
+    useEffect(()=>{
+        if(newsId){
+            void async function fetch(){
+                try{
+                    let data = await axios.get(`/posts/${newsId}/?populate=*`)
+                    let mydata = data?.data?.data?.attributes
+                    reset({...mydata, categories: mydata?.categories?.data.map(el=>el.id ), image:{ ...mydata?.image?.data?.attributes, id:mydata?.image?.data.id } })
+                }catch(err){
+                    console.log(`err`, err)
+                }
+            }()
+        }
+    },[newsId])
+
+ 
 
     const state = watch();
 
@@ -119,10 +139,17 @@ const InsertBlog = () => {
     const SignFirst = async () => {
         NProgress.start()
         try{
-            let res = await axios.post(`/posts`, { data: {...state, user: parseInt(user_id) } }, { headers: { Authorization: `bearer ${jwt}` }})
-            console.log('res', res)
-            AlertMessage(`Амжилттай хадаглалаа`, 'success')
-            window.scrollTo(0, 0);
+            if(newsId){
+                await axios.put(`/posts/${newsId}`, { data: {...state, user: parseInt(user_id) } }, { headers: { Authorization: `bearer ${jwt}` }})
+                AlertMessage(`Амжилттай засварлалаа`, 'success')
+                back()
+            }else{
+                await axios.post(`/posts`, { data: {...state, user: parseInt(user_id) } }, { headers: { Authorization: `bearer ${jwt}` }})
+                AlertMessage(`Амжилттай хадаглалаа`, 'success')
+                window.scrollTo(0, 0);
+            }
+
+            
             // reset(Initial)
         }catch(err){
             AlertMessage(`Хүсэлт амжилтгүй`, 'warning')

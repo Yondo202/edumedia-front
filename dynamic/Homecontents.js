@@ -1,10 +1,27 @@
 import React, { useEffect, useState } from 'react'
+import ReactSlider from "react-slick";
+import { CustomArrow } from "@/miscs/CustomComp";
 import styled from 'styled-components'
 import ContentCard from '@/components/reusable/ContentCard'
 import SideNews from '@/components/reusable/SideNews'
 import axios from "@/global/axiosbase"
 
+const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    // fade: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    fade:false,
+    arrows: false,
+    dots:false,
+    autoplay: true,
+    autoplaySpeed: 3000,
+};
+
 const Homecontents = () => {
+    const sliderRef = React.useRef()
     const [ leftNews, setLeftNews ] = useState([])
     const [ bigNews, setBigNews ] = useState([])
     const [ smNews, setSmNews ] = useState([])
@@ -13,9 +30,9 @@ const Homecontents = () => {
     },[])
 
     const FetchData = async () =>{
-        let big = await axios.get(`/posts?populate=*&sort[0]=createdAt:desc&filters[position][code][$eq]=2.3`)
-        let sm = await axios.get(`/posts?populate=*&sort[0]=createdAt:desc&filters[position][code][$eq]=2.2`)
-        let left = await axios.get(`/posts?populate=*&sort[0]=createdAt:desc&filters[position][code][$eq]=2.1`)
+        let big = await axios.get(`/posts?populate=*&sort[0]=createdAt:desc&filters[position][code][$eq]=2.3&pagination[start]=0&pagination[limit]=10`)
+        let sm = await axios.get(`/posts?populate=*&sort[0]=createdAt:desc&filters[position][code][$eq]=2.2&pagination[start]=0&pagination[limit]=6`)
+        let left = await axios.get(`/posts?populate=*&sort[0]=createdAt:desc&filters[position][code][$eq]=2.1&pagination[start]=0&pagination[limit]=5`)
         setBigNews(big?.data?.data)
         setSmNews(sm?.data?.data)
         setLeftNews(left?.data?.data)
@@ -41,15 +58,23 @@ const Homecontents = () => {
                     <div className="contents_middle">
                         <div className="row">
 
-                            {bigNews.slice(0,1).map((el,ind)=>{
-                                return(
-                                    <div key={ind} className="col-md-12 col-12">
-                                        <ContentCard data={el} size="medium" />
-                                    </div>
-                                )
-                            })}
+                            <div className="col-md-12 col-12">
+                                <div className="slick_parent">
+                                    <ReactSlider 
+                                        ref={sliderRef}
+                                        {...settings}
+                                    >
+                                        {bigNews.map((el,ind)=>{
+                                            return(
+                                                <ContentCard key={ind} data={el} size="medium" />
+                                            )
+                                        })}
+                                    </ReactSlider>
+                                    <CustomArrow data={bigNews} sliderRef={sliderRef} />
+                                </div>
+                            </div>
 
-                            {smNews.slice(0,4).map((el,ind)=>{
+                            {smNews.map((el,ind)=>{
                                 return(
                                 <div key={ind} className="col-md-6 col-12">
                                     <ContentCard data={el} under_cat={true} read_hide={true} />

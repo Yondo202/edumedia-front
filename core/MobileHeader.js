@@ -5,7 +5,6 @@ import { Drawer } from "antd"
 
 
 const MobileHeader = ({ visible, setVisible, data }) => {
-    console.log('data', data)
     const { push } = useRouter()
     return (
         <Drawer
