@@ -7,12 +7,12 @@ module.exports = (phase) => {
 
   const env = {
     serverUrl: (() => {
-      if (isDev) return "http://localhost:1380";
+      if (isDev) return "https://edumedia.mn/api";
       if (isProd) return "https://edumedia.mn/api";
       if (isSTaging) return "https://edumedia.mn/api";
     })(),
     frontUrl: (() => {
-      if (isDev) return "http://localhost:3080";
+      if (isDev) return "https://edumedia.mn";
       if (isProd) return "https://edumedia.mn";
       if (isSTaging) return "https://edumedia.mn";
     })(),
